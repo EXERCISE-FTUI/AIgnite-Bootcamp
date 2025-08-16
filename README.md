@@ -1,36 +1,114 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# @src Directory Structure
 
-## Getting Started
+This directory contains the reorganized source code for the Exercise 2025 Open Recruitment project, following Next.js best practices.
 
-First, run the development server:
+## Structure
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+```
+@src/
+├── app/                 # Next.js App Router pages and layouts
+├── components/          # React components and UI elements
+├── utils/              # Utility functions and helpers
+├── hooks/              # Custom React hooks
+├── lib/                # Library functions and configurations
+├── types/              # TypeScript type definitions
+├── middleware.ts       # Next.js middleware
+├── components.json     # shadcn/ui components configuration
+├── eslint.config.mjs   # ESLint configuration
+├── postcss.config.mjs  # PostCSS configuration
+├── tailwind.config.ts  # Tailwind CSS configuration
+├── tsconfig.json       # TypeScript configuration
+├── next.config.js      # Next.js configuration
+├── next.config.ts      # Next.js TypeScript configuration
+├── next-env.d.ts      # Next.js environment types
+└── index.ts           # Main exports from @src
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Import Paths
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+After reorganization, update your import statements to use the new `@src` path:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Before (old structure)
+```typescript
+import { Button } from '@/components/ui/button'
+import { useToast } from '@/hooks/use-toast'
+import { cn } from '@/lib/utils'
+import { Dashboard } from '@/app/dashboard/page'
+```
 
-## Learn More
+### After (new structure)
+```typescript
+import { Button } from '@/src/components/ui/button'
+import { useToast } from '@/src/hooks/use-toast'
+import { cn } from '@/src/lib/utils'
+import { Dashboard } from '@/src/app/dashboard/page'
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Configuration Files
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The following configuration files have been moved to `@src/`:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **TypeScript**: `tsconfig.json`
+- **Next.js**: `next.config.js`, `next.config.ts`
+- **Tailwind**: `tailwind.config.ts`
+- **ESLint**: `eslint.config.mjs`
+- **PostCSS**: `postcss.config.mjs`
+- **shadcn/ui**: `components.json`
 
-## Deploy on Vercel
+## Next Steps
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. **Update tsconfig.json paths** (if needed)
+2. **Update import statements** throughout your codebase
+3. **Test the build** to ensure everything works correctly
+4. **Update CI/CD pipelines** if they reference old file paths
+5. **Update Next.js app router configuration** if needed
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Scripts
+
+Two reorganization scripts are available:
+
+### Bash Script (Unix/macOS/Git Bash)
+```bash
+bash scripts/move-to-src.sh
+```
+
+### PowerShell Script (Windows)
+```powershell
+# Run the reorganization
+.\scripts\move-to-src.ps1
+
+# Preview changes without making them
+.\scripts\move-to-src.ps1 -WhatIf
+```
+
+## Benefits of This Structure
+
+- **Better organization**: Related code is grouped together
+- **Clearer imports**: `@src/` prefix makes it obvious where code comes from
+- **Easier maintenance**: Configuration files are centralized
+- **Better scalability**: Easier to add new features and maintain code
+- **Follows conventions**: Aligns with Next.js and React best practices
+- **App Router support**: App directory is properly organized within @src
+
+## Troubleshooting
+
+If you encounter issues after reorganization:
+
+1. **Check import paths**: Ensure all imports use `@src/`
+2. **Verify configuration**: Check that config files are properly referenced
+3. **Clear cache**: Run `npm run build` to ensure clean compilation
+4. **Check TypeScript**: Ensure `tsconfig.json` paths are correct
+5. **App Router**: Verify that Next.js can still find the app directory
+
+## Rollback
+
+If you need to revert the changes:
+
+1. Move all folders and files back to the root
+2. Update import statements to use old paths
+3. Update configuration files to reference old locations
+
+---
+
+**Note**: This reorganization improves code organization but requires updating import statements throughout the codebase. Plan accordingly and test thoroughly after making changes.
+
