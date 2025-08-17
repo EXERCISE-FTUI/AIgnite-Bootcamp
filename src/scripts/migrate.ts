@@ -1,17 +1,21 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-const fs = require("fs");
-const path = require("path");
-const {Client} = require("pg");
+import fs from "fs";
+import path from "path";
+import {Client} from "pg";
+import dotenv from "dotenv";
 
 // Load env from .env.local (fallback to .env)
 try {
-	require("dotenv").config({path: path.resolve(process.cwd(), ".env.local")});
-} catch (_) {}
+	dotenv.config({path: path.resolve(process.cwd(), ".env.local")});
+} catch {
+	// Ignore error if .env.local doesn't exist
+}
 try {
-	require("dotenv").config();
-} catch (_) {}
+	dotenv.config();
+} catch {
+	// Ignore error if .env doesn't exist
+}
 
-function maskConnectionString(raw) {
+function maskConnectionString(raw: string): string {
 	try {
 		const u = new URL(raw);
 		const user = decodeURIComponent(u.username || "");
@@ -21,12 +25,12 @@ function maskConnectionString(raw) {
 		return `${u.protocol}//${
 			user ? user + ":" : ""
 		}***@${host}:${port}${db}`;
-	} catch (_) {
+	} catch {
 		return "***";
 	}
 }
 
-async function main() {
+async function main(): Promise<void> {
 	const databaseUrl = process.env.DIRECT_URL;
 	if (!databaseUrl) {
 		console.error("Missing DIRECT_URL in environment");
@@ -79,9 +83,14 @@ async function main() {
 			);
 			await client.query("rollback");
 			console.warn("[migrate] Rollback complete.");
-		} catch (_) {}
-		console.error("[migrate] Migration failed:", err.message);
-		if (err && err.stack) {
+		} catch {
+			// Ignore rollback errors
+		}
+		console.error(
+			"[migrate] Migration failed:",
+			err instanceof Error ? err.message : String(err)
+		);
+		if (err instanceof Error && err.stack) {
 			console.error("[migrate] Stack:", err.stack);
 		}
 		process.exitCode = 1;
@@ -92,4 +101,7 @@ async function main() {
 	}
 }
 
-main();
+main().catch((err) => {
+	console.error("[migrate] Unhandled error:", err);
+	process.exit(1);
+});
