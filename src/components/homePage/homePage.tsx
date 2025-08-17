@@ -25,18 +25,18 @@ const HomePageExer = () => {
 	const starDelays = [0.2, 1.5, 0.8, 2.1, 1.2, 0.5, 1.8];
 
 	return (
-		<div className="w-full lg:mt-0 lg:h-[500px] pb-10 lg:pb-20">
-			<div className="w-full h-[130%] flex flex-col justify-center items-center">
+		<div className="w-full lg:mt-20 lg:h-[500px] pb-10 lg:pb-20">
+			<div className="w-full h-[130%] gap-8 flex flex-col justify-center items-center">
 				<h1 className="text-7xl max-md:text-4xl font-black text-blue_3">
 					<motion.span
-						className="bg-gradient-to-r from-purple_3 to-gray_2 bg-clip-text text-transparent"
+						className="bg-white bg-clip-text text-transparent"
 						initial={{opacity: 0}}
 						animate={{opacity: 1}}
 						transition={{
 							duration: 2,
 						}}
 					>
-						Open
+						AIGNITE
 					</motion.span>{" "}
 					<motion.span
 						initial={{opacity: 0}}
@@ -45,8 +45,9 @@ const HomePageExer = () => {
 							delay: 0.5,
 							duration: 3,
 						}}
+						className="bg-clip-text text-transparent bg-gradient-to-b from-[#15394A] via-[#2B7696] to-[#FFFFFF] "
 					>
-						Recruitment
+						BOOTCAMP
 					</motion.span>
 				</h1>
 				<motion.div
@@ -54,24 +55,14 @@ const HomePageExer = () => {
 					animate={{opacity: 1}}
 					transition={{delay: 1.5, duration: 2}}
 				>
-					<div className="p-6">
-						<div className="px-4 py-2 w-auto h-auto bg-blue_3 text-white_2">
-							<p className="text-5xl max-md:text-2xl text-center">
-								EXERCISE 2025
-							</p>
-						</div>
-					</div>
 					<div className="w-full gap-2 text-center">
 						<Image
-							src="/headerExer.svg"
+							src="/exer-Footer.svg"
 							alt="headerExer"
-							className="w-full h-[100px] z-10"
+							className="w-full h-[200px] z-10"
 							width={100}
 							height={100}
 						/>
-						<p className="text-blue_3 text-2xl max-md:text-lg font-extrabold italic">
-							#IntoTheExerverse
-						</p>
 					</div>
 				</motion.div>
 			</div>
