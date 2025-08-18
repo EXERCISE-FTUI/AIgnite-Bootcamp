@@ -1,0 +1,140 @@
+_(Note: These general rules are defined in `.cursor/rules/general.mdc`)_
+
+## Critical Restrictions
+
+**These actions are strictly prohibited and require extreme caution and explicit approval if ever necessary:**
+
+-   **NEVER push directly to the `master` or `main` branches.** All code changes must go through the standard Pull Request workflow.
+-   **NEVER create tests unless explicitly asked for.** Focus on implementing functional code rather than test coverage by default.
+-   **NEVER create README files.** Always prefer to include documentation inline with the code and as code header comments. Documentation should live within the codebase itself rather than in separate markdown files.
+    -   See the "Documentation & Header Comments" section below for how to document files and utilities.
+
+## Core Development Principles
+
+These guidelines apply generally across the codebase.
+
+### A. React
+
+-   Write functional components using React hooks exclusively.
+-   Use Next.js 15+ App Router structure.
+
+### B. TypeScript
+
+-   Favor anonymous callbacks (no `handleClick = () => {}` class syntax).
+-   Prefer `type` aliases over `interface`.
+-   Omit semicolons to keep style consistent.
+-   Never use `any`; use `unknown` or precise types instead.
+-   Let TypeScript infer return types unless you need `ReturnType<fn>`.
+-   Keep types at the top of the file where they are used.
+-   Extract helpers only when reused or they meaningfully reduce nesting.
+-   Avoid a forest of tiny functions; merge logic when it stays readable.
+
+### C. Scope & Abstraction
+
+-   Minimize scope: variables/constants live in the narrowest block that needs them.
+-   Rule of Three: extract a helper only after the logic is used at least twice (ideally three) or when readability demands it.
+-   Default to private exports—expose only what callers truly require.
+-   Boy-Scout Rule: when touching a file, inline outdated or single-use helpers instead of keeping dead abstractions.
+
+### D. Database (Supabase)
+
+-   Use Supabase client for database operations.
+-   Follow the established patterns in `src/utils/supabase/`.
+-   Use environment variables for Supabase configuration.
+
+### E. File Naming
+
+-   Use kebab-case for filenames (e.g., `my-component.tsx`).
+-   Use PascalCase for React components.
+
+### F. File Organization (Step-Down Rule)
+
+-   Top-down, newspaper style: high-level exports first; implementation details and helpers below.
+-   Keep helpers next to their only caller; if shared, place them immediately after the first consumer.
+
+### G. DRY - Do Not Repeat Yourself
+
+-   Duplicate code signals missing abstraction. Extract once repetition is proven (see Rule of Three).
+
+### H. KISS - Keep It Simple, Stupid
+
+-   Prefer straightforward solutions—avoid fancy patterns, premature optimization, and "gold-plating."
+-   Skip verbose comments that restate code; aim for self-explanatory logic.
+-   Add robustness only where it materially improves user or developer experience.
+
+### I. Code Hygiene - No Dead Code / YAGNI
+
+-   Ship only code that runs in production (or tests). Delete legacy or unreachable branches.
+-   Remove unused exports and duplicate implementations.
+-   Apply the Boy-Scout Rule: every edit is a chance to prune what's no longer needed.
+
+### J. Documentation & Header Comments
+
+We want to let engineers grok the design and role of the logic contained in each file without scrolling.
+
+-   Start every runnable source file (`.ts`, `.tsx`, `.mjs`, etc.) with a **multiline docblock** (e.g. `/** … */`) placed at the very top—only directives like `"use client"` may appear above it. Its first line is a single-sentence summary of the file.
+-   For non-trivial files, extend that same docblock with extra sections such as `Architecture`, `Components`, `Integration`, or ascii diagrams — use as much detail as needed **within one screen (~40-50 lines, ≤ 90 chars/line)**.
+-   Helper/utility files may skip the file-level header; instead, document each exported function with a JSDoc comment.
+-   Keep comments fresh—update the header whenever the file changes; stale docs are worse than none.
+
+## Project Structure
+
+This is a **single Next.js application** with the following structure:
+
+-   **`src/`**: Main source code directory
+    -   **`app/`**: Next.js App Router pages and layouts
+    -   **`components/`**: React components organized by feature
+        -   **`ui/`**: Reusable UI primitives (buttons, forms, etc.)
+    -   **`utils/`**: Utility functions and helpers
+        -   **`supabase/`**: Supabase client configurations
+    -   **`types/`**: TypeScript type definitions
+    -   **`hooks/`**: Custom React hooks
+    -   **`lib/`**: Library configurations and utilities
+-   **`migrations/`**: Database migration files
+-   **`public/`**: Static assets (images, icons, etc.)
+
+## Available Scripts
+
+| Task                    | Command              |
+| ----------------------- | -------------------- |
+| Run development server  | `npm run dev`        |
+| Build for production    | `npm run build`      |
+| Start production server | `npm run start`      |
+| Run linting             | `npm run lint`       |
+| Run database migration  | `npm run migrate`    |
+| Type-check code         | `npm run type-check` |
+
+## Frontend Setup
+
+The following points capture the conventions that are unique to our frontend stack:
+
+-   **Framework:** **Next.js 15+** with the **App Router**.
+-   **Styling:** **Tailwind CSS** with custom color variables and design tokens.
+-   **Forms:** **react-hook-form** + **zod** (via `@hookform/resolvers`).
+-   **Auth:** **Supabase** authentication with SSR support.
+-   **UI Components:** **Radix UI** primitives with custom styling.
+-   **Icons:** **lucide-react** for consistent iconography.
+-   **State Management:** Local component state and React Context preferred.
+
+## Database & Backend
+
+-   **Database:** **Supabase** (PostgreSQL)
+-   **API Routes:** Next.js API routes in `src/app/api/`
+-   **Environment:** Use `.env.local` for local development
+-   **Migrations:** SQL files in `migrations/` directory
+
+## Finding More Context
+
+Don't hesitate to stop and ask clarifying questions. It's best to zoom out and ask 3-5 diverse questions at the same time to get a well rounded clarification.
+
+## Exploring the Codebase
+
+To get a quick visual overview of directory structures, use the `tree` command (e.g., `tree -L 2 src/components`).
+
+## Running TypeScript Scripts
+
+For quick debugging you can use `npm run migrate` for database migrations or `tsx <file.ts>` for other TypeScript scripts.
+
+Use backfills to make and run typescript code that should be persisted (used reccuringly).
+
+For quick debugging you can use `pnpm tsx <ts-file-path>` command via the terminal execution tool.
