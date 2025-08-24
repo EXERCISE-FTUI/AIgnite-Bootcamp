@@ -25,7 +25,7 @@ const HomePageExer = () => {
 	const starDelays = [0.2, 1.5, 0.8, 2.1, 1.2, 0.5, 1.8];
 
 	return (
-		<div className="w-full lg:mt-20 lg:h-[500px] pb-10 lg:pb-20">
+		<div className="w-full lg:mt-20 lg:h-[500px] pb-10 lg:pb-20 overflow-hidden relative">
 			<div className="w-full h-[130%] gap-8 flex flex-col justify-center items-center">
 				<h1 className="text-7xl max-md:text-4xl font-black text-blue_3">
 					<motion.span
