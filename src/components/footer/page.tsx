@@ -14,15 +14,9 @@ const Footer = () => {
     };
 
     return (
-        <div
-            className="w-full flex flex-col h-auto font-light"
-            style={{
-                background:
-                    "linear-gradient(91.66deg, #383F96 -9.64%, #0D2734 19.66%, #15394A 49.42%, #2B7696 67.43%, #645B87 97.26%)",
-            }}
-        >
+        <div className="w-full flex flex-col h-100 overflow-hidden bg-white relative">
             {/* Top Section */}
-            <div className="w-full h-full hidden md:flex flex-row m-12">
+            <div className="w-full h-full hidden md:flex flex-row m-12 z-10">
                 {/* Left Section */}
                 <div className="w-1/2 h-full">
                     <div className="flex flex-col items-center w-[50%] justify-center h-full mt-8">
@@ -37,7 +31,7 @@ const Footer = () => {
                 </div>
 
                 {/* Right Section */}
-                <div className="w-1/2 h-full flex flex-col justify-center mr-12">
+                <div className="w-1/2 h-full flex flex-col justify-center mr-12 text-blue_3 font-normal">
                     <div className="flex flex-row items-start gap-4 px-8 pr-24">
                         <Image
                             src="/location.svg"
@@ -46,7 +40,7 @@ const Footer = () => {
                             width={24}
                             height={24}
                         />
-                        <p className="text-md text-white">
+                        <p className="text-md">
                             Faculty of Engineering, University of Indonesia, Jl.
                             Prof. DR. Ir R Roosseno, Kukusan, Beji, Depok City,
                             West Java 16425
@@ -60,14 +54,10 @@ const Footer = () => {
                             width={24}
                             height={24}
                         />
-                        <p className="text-md text-white">
-                            hr@exerciseftui.com
-                        </p>
+                        <p className="text-md">hr@exerciseftui.com</p>
                     </div>
                     <div className="flex flex-col items-start gap-2 px-8 mt-6">
-                        <p className="text-md text-white font-extrabold">
-                            Follow us
-                        </p>
+                        <p className="text-md font-extrabold">Follow us</p>
                         <div className="flex flex-row gap-4">
                             <Image
                                 src="/instagramWhite.svg"
@@ -91,7 +81,7 @@ const Footer = () => {
             </div>
 
             {/* Mobile Section */}
-            <div className="md:hidden flex flex-row gap-10 px-4 pt-8 h-auto">
+            <div className="md:hidden flex flex-row gap-10 px-4 pt-8 h-auto font-normal text-blue_3">
                 <div className="w-full grid grid-cols-8 gap-2 h-full">
                     <div className="col-span-5 grid grid-rows-2 space-y-4 items-center justify-center h-full">
                         <Image
@@ -109,16 +99,16 @@ const Footer = () => {
                                 width={24}
                                 height={24}
                             />
-                            <p className="text-[10px] text-white">
+                            <p className="text-[10px]">
                                 Faculty of Engineering, University of Indonesia,
                                 Jl. Prof. DR. Ir R Roosseno, Kukusan, Beji,
                                 Depok City, West Java 16425
                             </p>
                         </div>
                     </div>
-                    <div className="col-span-3 grid grid-rows-2 h-full flex flex-col gap-7">
+                    <div className="col-span-3 grid grid-rows-2 h-full gap-7">
                         <div className="row-span-1 flex flex-col items-start gap-2">
-                            <p className="text-lg text-white font-medium gap-6">
+                            <p className="text-lg font-medium gap-6">
                                 Follow us
                             </p>
                             <div className="flex flex-row gap-4">
@@ -148,65 +138,26 @@ const Footer = () => {
                                 width={20}
                                 height={20}
                             />
-                            <p className="text-md text-white truncate">
+                            <p className="text-md truncate">
                                 hr@exerciseftui.com
                             </p>
                         </div>
                     </div>
                 </div>
-
-                {/* <div className="w-[65%] h-full flex flex-col gap-7">
-					<div className="flex flex-col items-center w-[50%] justify-center h-full mt-8">
-						<Image
-							src={Exer_Footer}
-							alt="logo"
-							className="w-full ml-16"
-						/>
-					</div>
-					<div className="items-start flex flex-row pl-8 pr-12 max-md:pr-0">
-						<Image
-							src={location}
-							alt="location"
-							className="w-6 h-6"
-						/>
-						<p className="text-xs text-white">
-							Faculty of Engineering, University of Indonesia, Jl.
-							Prof. DR. Ir R Roosseno, Kukusan, Beji, Depok City,
-							West Java 16425
-						</p>
-					</div>
-				</div>
-				<div className="w-[35%] h-full flex flex-col gap-7 mr-12">
-					<div className="flex flex-col items-start gap-2 mt-6">
-						<p className="text-lg text-white font-medium gap-6">
-							Follow us
-						</p>
-						<div className="flex flex-row gap-4">
-							<Image
-								src={instagramWhite}
-								alt="instagram"
-								className="w-8 h-8"
-								onClick={handleClickInstagram}
-							/>
-							<Image
-								src={linkedinWhite}
-								alt="linkedin"
-								className="w-8 h-8"
-								onClick={handleClickLinkedin}
-							/>
-						</div>
-					</div>
-					<div className="flex flex-row items-start gap-4 max-md:gap-2 mt-12">
-						<Image src={email} alt="email" className="w-6 h-6" />
-						<p className="text-md text-white">
-							hr@exerciseftui.com
-						</p>
-					</div>
-				</div> */}
             </div>
             <div className="mt-2 mb-4 lg:mb-10 flex items-center justify-center">
-                <p className="text-white text-md">© 2025 Exercise FTUI.</p>
+                <p className="text-blue_3 font-semibold text-md">
+                    © 2025 Exercise FTUI.
+                </p>
             </div>
+
+            <Image
+                src="/footer/aurora.png"
+                alt="footer-bg"
+                className="absolute -top-20 scale-[70%] -right-40 hidden lg:flex"
+                width={1000}
+                height={1000}
+            />
         </div>
     );
 };
