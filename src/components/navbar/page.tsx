@@ -14,22 +14,12 @@ interface NavbarProps {
 const Navbar = ({isLoggedIn}: NavbarProps) => {
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 	const [isFirstRender, setIsFirstRender] = useState(true);
-	const [, setIsDesktop] = useState(false);
 	const [isHomePage, setIsHomePage] = useState(false);
 
 	useEffect(() => {
 		setIsFirstRender(false);
-
-		const handleResize = () => {
-			setIsDesktop(window.innerWidth >= 1024);
-		};
-
 		// Set initial values
-		handleResize();
 		setIsHomePage(window.location.pathname === "/");
-
-		window.addEventListener("resize", handleResize);
-		return () => window.removeEventListener("resize", handleResize);
 	}, []);
 
 	const toggleMobileMenu = () => {
@@ -104,7 +94,7 @@ const Navbar = ({isLoggedIn}: NavbarProps) => {
 				}}
 			>
 				<div
-					className={`w-full flex justify-between items-center px-6 lg:px-16 py-3 lg:py-5 ${
+					className={`w-full flex h-20 justify-between items-center px-6 lg:px-16 py-3 lg:py-5 ${
 						isMobileMenuOpen ? "rounded-t-xl" : "rounded-xl"
 					} lg:rounded-xl lg:backdrop-blur-md lg:shadow-lg bg-white`}
 				>
