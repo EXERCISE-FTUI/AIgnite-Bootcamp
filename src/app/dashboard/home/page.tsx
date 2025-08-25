@@ -41,8 +41,6 @@ const HomePage = () => {
 			<CountdownTimer />
 			<DefineExer />
 			<OurVision />
-			<OurMission />
-			<OurValues />
 			<Divisions />
 			<Timeline />
 			<CarouselLastYear />

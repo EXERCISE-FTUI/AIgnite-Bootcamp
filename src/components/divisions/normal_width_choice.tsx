@@ -12,26 +12,20 @@ const NormalWidth = ({selectedIcon, setSelectedIcon}: NormalWidthProps) => {
 
 	// Add labels for each icon
 	const iconLabels = [
-		"Human Resource",
-		"Finance and Secretary",
-		"Relation",
 		"UI/UX",
 		"Software",
 		"Hardware",
-		"Project Management",
-		"Creative Marketing",
-		"Training and Development",
 	];
 
 	return (
 		<div className="w-full flex justify-center">
-			<div className="bg-white rounded-[50px] h-20 px-[30px] flex justify-center items-center">
+			<div className="bg-gradient-to-r from-[#0A192F] to-[#002A5E] rounded-[50px] h-14 px-[30px] flex justify-center items-center shadow-lg shadow-border">
 				{divisionIcons.map((icon, index) => (
 					<div key={index} className="relative">
 						{/* Hover Label */}
 						{hoveredIcon === index && (
 							<div className="absolute -top-[40px] left-1/2 transform -translate-x-1/2 w-max">
-								<div className="w-max px-4 py-0.5 bg-[#55457e] rounded-md justify-center items-center gap-2.5 inline-flex">
+								<div className="w-max px-4 py-0.5 bg-[#0D2734]  rounded-md justify-center items-center gap-2.5 inline-flex">
 									<div className="text-center text-white text-base font-medium font-['Inter']">
 										{iconLabels[index]}
 									</div>
@@ -41,10 +35,10 @@ const NormalWidth = ({selectedIcon, setSelectedIcon}: NormalWidthProps) => {
 
 						{/* Icon Container */}
 						<div
-							className={`relative w-auto px-2 h-20 flex justify-center items-center cursor-pointer transition-all duration-300 ease-in-out
+							className={`relative w-96 px-2 h-14 flex justify-center items-center cursor-pointer transition-all duration-300 ease-in-out
                 ${
 					hoveredIcon === index || selectedIcon === index
-						? "bg-[#55457E] rounded-none"
+						? "bg-white rounded-none"
 						: "rounded-lg"
 				}`}
 							onClick={() => setSelectedIcon(index)}
@@ -55,16 +49,16 @@ const NormalWidth = ({selectedIcon, setSelectedIcon}: NormalWidthProps) => {
 								<Image
 									src={icon.selectedSrc}
 									alt={icon.alt}
-									width={100}
-									height={100}
+									width={67}
+									height={67}
 								/>
 							) : (
 								<Image
 									src={icon.src}
 									alt={icon.alt}
 									className=" transition-colors duration-300 ease-in-out"
-									width={100}
-									height={100}
+									width={67}
+									height={67}
 								/>
 							)}
 						</div>
