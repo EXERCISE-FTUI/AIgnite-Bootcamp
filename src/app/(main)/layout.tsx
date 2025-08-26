@@ -15,9 +15,12 @@ export default async function RootLayout({
             style={{
                 background:
                     "linear-gradient(180deg, #121212 0%, #1F225B 20.22%, #35386D 39.59%, #2B7696 55.12%, #1C465C 69.89%, #15394A 85.23%, #0D2734 100%)",
+                minHeight: "100vh"
             }}
         >
-            {children}
+            <div className="pt-28 lg:pt-12 w-full">
+                {children}
+            </div>
         </div>
     );
 }

@@ -11,8 +11,10 @@ export default async function RootLayout({
     children,
 }: Readonly<{ children: React.ReactNode }>) {
     return (
-        <div className="custom-gradient">
-            {children}
+        <div className="custom-gradient min-h-screen">
+            <div className="pt-28 lg:pt-12 w-full">
+                {children}
+            </div>
         </div>
     );
 }

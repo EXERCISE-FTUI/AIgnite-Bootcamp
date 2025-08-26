@@ -28,7 +28,8 @@ export default async function RootLayout({
             <body>
                 <Navbar isLoggedIn={data.user ? true : false} />
                 <div
-                    className={`${inter.className} pt-28 lg:pt-12 w-full`}
+                    className={`${inter.className} w-full`}
+                    style={{backgroundColor: 'rgba(0, 0, 0, 0)'}}
                 >
                     {children}
                     <Toaster />
