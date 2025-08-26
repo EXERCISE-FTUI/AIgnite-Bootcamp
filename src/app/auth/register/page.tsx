@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/card";
 import {Check} from "lucide-react";
 import Link from "next/link";
+import "./register.css";
 
 const Page = () => {
 	const {toast} = useToast();
@@ -68,10 +69,10 @@ const Page = () => {
 	}
 
 	return (
-		<div className="flex flex-col justify-center items-center mt-0 lg:mt-24 lg:px-32">
+		<div className="custom-gradient flex flex-col justify-center items-center mt-0 lg:mt-24 lg:px-32">
 			{step === 1 ? (
 				<>
-					<h1 className=" flex text-purple_4 scroll-m-20 text-3xl font-extrabold tracking-tight lg:text-4xl">
+					<h1 className=" flex text-white scroll-m-20 text-3xl font-extrabold tracking-tight lg:text-4xl">
 						Register
 					</h1>
 					<div className="mt-5 md:mt-0 w-full items-center grid grid-cols-1 md:grid-cols-2 gap-4 justify-center">

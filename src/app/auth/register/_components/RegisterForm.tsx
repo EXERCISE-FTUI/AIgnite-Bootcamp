@@ -85,7 +85,7 @@ export const RegisterForm: React.FC<LoginFormProps> = ({
 								htmlFor="confirm-password"
 								className="text-sm text-gray-700"
 							>
-								Password
+								Confirm Your Password
 							</label>
 						</div>
 						<Input

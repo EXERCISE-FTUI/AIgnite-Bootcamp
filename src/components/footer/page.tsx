@@ -23,7 +23,7 @@ const Footer = () => {
                         <Image
                             src="/Exer-Footer.svg"
                             alt="logo"
-                            className="w-72 h-36"
+                            className="w-72 h-36 "
                             width={288}
                             height={144}
                         />
