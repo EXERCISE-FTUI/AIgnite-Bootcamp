@@ -71,7 +71,7 @@ const Divisions = () => {
 						<div className="h-auto flex justify-center items-center pt-6">
 							<Link
 								href="/dashboard"
-								className="h-auto group lg:px-6 py-2 bg-gradient-to-r from-[#0A192F] to-[#002A5E] rounded-xl shadow-[0px_1px_12px_0px_rgba(157,152,179,0.25)] flex items-center justify-center transition-all duration-300 hover:border-[#0A192F] hover:scale-[120%] hover:border-4 hover:from-white hover:to-white"
+								className="h-auto group lg:px-6 py-2 bg-gradient-to-r from-[#0A192F] to-[#002A5E] rounded-xl shadow-[0px_1px_12px_0px_rgba(157,152,179,0.25)] flex items-center justify-center transition-all duration-300 hover:border-[#0A192F] hover:scale-[110%] border-white border-4 hover:from-white hover:to-white"
 							>
 								<span className="text-white text-lg lg:text-[28px] font-bold px-16 py-3 tracking-wide group-hover:text-[#002A5E]">
 									Get your points now!

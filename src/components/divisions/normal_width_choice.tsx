@@ -19,7 +19,7 @@ const NormalWidth = ({selectedIcon, setSelectedIcon}: NormalWidthProps) => {
 
 	return (
 		<div className="w-full flex justify-center">
-			<div className="bg-gradient-to-r from-[#0A192F] to-[#002A5E] rounded-[50px] h-14 px-[30px] flex justify-center items-center shadow-lg shadow-border">
+			<div className="bg-gradient-to-r from-[#0A192F] to-[#002A5E] rounded-[50px] mx-[30px] h-14 flex justify-center items-center shadow-lg shadow-border">
 				{divisionIcons.map((icon, index) => (
 					<div key={index} className="relative">
 						{/* Hover Label */}
@@ -36,11 +36,20 @@ const NormalWidth = ({selectedIcon, setSelectedIcon}: NormalWidthProps) => {
 						{/* Icon Container */}
 						<div
 							className={`relative w-96 px-2 h-14 flex justify-center items-center cursor-pointer transition-all duration-300 ease-in-out
-                ${
-					hoveredIcon === index || selectedIcon === index
-						? "bg-white rounded-none"
-						: "rounded-lg"
-				}`}
+								${
+									hoveredIcon === index || selectedIcon === index
+										? `
+										bg-white 
+										${
+											index === 0
+											? "rounded-l-[50px]" // leftmost: round only left side
+											: index === divisionIcons.length - 1
+											? "rounded-r-[50px]" // rightmost: round only right side
+											: "rounded-none" // middle: no rounded edges
+										}
+										` : 'rounded-lg'
+								}
+							`}
 							onClick={() => setSelectedIcon(index)}
 							onMouseEnter={() => setHoveredIcon(index)}
 							onMouseLeave={() => setHoveredIcon(null)}
