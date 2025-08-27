@@ -7,8 +7,6 @@ import Divisions from "@/components/divisions/page";
 import SliderCompany from "@/components/sliderCompany/page";
 import DefineExer from "@/components/homePage/defineExer";
 import OurVision from "@/components/homePage/ourVision";
-import OurMission from "@/components/homePage/ourMission";
-import OurValues from "@/components/homePage/ourValues";
 import HomePageExer from "@/components/homePage/homePage";
 import CarouselLastYear from "@/components/carouselLastyear/Page";
 import CardProject from "@/components/cardProject/Page";
