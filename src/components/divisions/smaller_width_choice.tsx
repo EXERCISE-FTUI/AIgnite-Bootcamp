@@ -15,15 +15,9 @@ const SmallerWidth = ({
 	setSelectedIcon,
 }: SmallerWidthProps) => {
 	const divisionNames = [
-		"Human Resource",
-		"Finance and Secretary",
-		"Relation",
 		"UI/UX",
 		"Software",
 		"Hardware",
-		"Project Management",
-		"Creative Marketing",
-		"Training and Development",
 	];
 
 	return (
@@ -31,7 +25,7 @@ const SmallerWidth = ({
 			<div className="relative w-full">
 				<button
 					onClick={() => setIsOpen(!isOpen)}
-					className={`w-full h-auto py-2 relative bg-neutral-50 shadow-[0px_4px_10px_0px_rgba(0,0,0,0.10)] flex items-center justify-between px-6
+					className={`w-full h-auto py-2 relative bg-gradient-to-r from-[#0A192F] to-[#002A5E] shadow-[0px_4px_10px_0px_rgba(0,0,0,0.10)] flex items-center justify-between px-6
             ${isOpen ? "rounded-t-xl" : "rounded-xl"}`}
 				>
 					<div className="flex items-center gap-4">
@@ -43,7 +37,7 @@ const SmallerWidth = ({
 								height={50}
 							/>
 						</div>
-						<span className="text-[#55457e] text-lg font-medium font-['Inter'] truncate">
+						<span className="text-white text-lg font-medium font-['Inter'] truncate">
 							{divisionNames[selectedIcon]}
 						</span>
 					</div>
@@ -65,13 +59,13 @@ const SmallerWidth = ({
 				</button>
 
 				{isOpen && (
-					<div className="absolute w-full bg-white rounded-b-lg shadow-lg p-2">
-						<div className="grid grid-rows-2 grid-cols-5 gap-3">
+					<div className="absolute w-full bg-[#0D2734] rounded-b-lg shadow-lg p-2">
+						<div className="grid grid-rows-3 grid-cols-1 gap-3">
 							{divisionIcons.map((icon, index) => (
 								<div
 									key={index}
 									className={`flex rounded-lg justify-center items-center cursor-pointer transition-all duration-300 ease-in-out
-                    ${selectedIcon === index ? "bg-[#55457E]" : ""}`}
+                    ${selectedIcon === index ? "bg-white" : ""}`}
 									onClick={() => {
 										setSelectedIcon(index);
 										setIsOpen(false);
