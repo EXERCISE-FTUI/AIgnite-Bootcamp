@@ -119,7 +119,7 @@ export default function LoggedPage() {
                         </div>
                     </div>
                 </div>
-            </div>>
+            </div>
         </div>
     );
 }
