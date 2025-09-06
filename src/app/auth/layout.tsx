@@ -1,11 +1,4 @@
 import "../globals.css";
-import { createClient } from "@/utils/supabase/server";
-
-async function checkUser() {
-    const supabase = createClient();
-    const { data } = await (await supabase).auth.getUser();
-    return data;
-}
 
 export default async function RootLayout({
     children,
