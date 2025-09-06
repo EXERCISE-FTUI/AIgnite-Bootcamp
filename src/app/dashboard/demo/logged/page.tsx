@@ -16,22 +16,6 @@ const lowerRankingsData = [
     { id: 10, name: "John Four", score: 695, rank: 4 },
 ];
 
-const userData = {
-    id: 1,
-    name: "John Doe",
-    path: "path1",
-    points: 700,
-    referralCode: "BCX123",
-};
-
-const missions = [
-    { id: 1, task: "Do a flip", points: 55 },
-    { id: 2, task: "Do a flip", points: 55 },
-    { id: 3, task: "Do a flip", points: 55 },
-    { id: 4, task: "Do a flip", points: 55 },
-    { id: 5, task: "Do a flip", points: 55 },
-];
-
 export default function LoggedPage() {
     const getMedalIcon = (medal: string) => {
         let src = "";
@@ -55,7 +39,7 @@ export default function LoggedPage() {
     return (
         <div>
             <div className="bg-white min-h-screen w-full p-14">
-              <div className="bg-gradient-to-r from-[#10152C] via-[#1F225B] to-[#121212] h-screen w-full"></div>
+                <div className="bg-gradient-to-r from-[#10152C] via-[#1F225B] to-[#121212] h-screen w-full"></div>
             </div>
             <div className="bg-gradient-to-bl from-[#10152C] to-[#6A4FCF] py-16">
                 <div className="container mx-auto px-6">
