@@ -1,8 +1,8 @@
 import Footer from "@/components/footer/page";
 import "./globals.css";
 import Navbar from "@/components/navbar/page";
-import {Inter} from "next/font/google";
-import {Toaster} from "@/components/ui/toaster";
+import { Inter } from "next/font/google";
+import { Toaster } from "@/components/ui/toaster";
 
 const inter = Inter({
     weight: "400",
@@ -10,11 +10,11 @@ const inter = Inter({
 });
 
 import HelpButton from "@/components/helpButton/HelpButton";
-import {createClient} from "@/utils/supabase/server";
+import { createClient } from "@/utils/supabase/server";
 
-export async function checkUser() {
+async function checkUser() {
     const supabase = createClient();
-    const {data} = await (await supabase).auth.getUser();
+    const { data } = await (await supabase).auth.getUser();
     return data;
 }
 
@@ -29,7 +29,7 @@ export default async function RootLayout({
                 <Navbar isLoggedIn={data.user ? true : false} />
                 <div
                     className={`${inter.className} w-full`}
-                    style={{backgroundColor: 'rgba(0, 0, 0, 0)'}}
+                    style={{ backgroundColor: "rgba(0, 0, 0, 0)" }}
                 >
                     {children}
                     <Toaster />
