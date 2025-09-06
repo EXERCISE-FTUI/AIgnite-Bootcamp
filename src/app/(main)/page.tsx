@@ -1,5 +1,6 @@
 // import Hello from "@/app/dashboard/home/page";
-import Dashboard from "./dashboard/demo/unlogged/page";
+
+import Dashboard from "../dashboard/page";
 
 export default function Home() {
     return (
