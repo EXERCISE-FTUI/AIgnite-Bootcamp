@@ -1,25 +1,25 @@
 "use client";
 
-import {createClient} from "./supabase/client";
+import { createClient } from "./supabase/client";
 
 export async function signInWithGoogle() {
-	const supabase = createClient();
-	const auth_callback_url = `${process.env.NEXT_PUBLIC_BASE_URL}/auth/callback`;
+    const supabase = createClient();
+    const auth_callback_url = `${process.env.NEXT_PUBLIC_BASE_URL}/auth/callback`;
+    console.log("auth_callback_url", auth_callback_url);
+    const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: { redirectTo: auth_callback_url },
+    });
 
-	const {data, error} = await supabase.auth.signInWithOAuth({
-		provider: "google",
-		options: {redirectTo: auth_callback_url},
-	});
+    console.log(data, error);
 
-	console.log(data, error);
+    if (error) {
+        console.error("Error signing in with Google:", error.message);
+        return;
+    }
 
-	if (error) {
-		console.error("Error signing in with Google:", error.message);
-		return;
-	}
-
-	if (data?.url) {
-		console.log("Redirecting to:", data.url);
-		window.location.href = data.url; // Redirect the user
-	}
+    if (data?.url) {
+        console.log("Redirecting to:", data.url);
+        window.location.href = data.url; // Redirect the user
+    }
 }
