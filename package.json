@@ -8,8 +8,7 @@
         "start": "next start",
         "lint": "next lint",
         "migrate": "tsx src/scripts/migrate.ts",
-        "type-check": "tsc --noEmit",
-        "prepare": "husky install || true"
+        "type-check": "tsc --noEmit"
     },
     "dependencies": {
         "@hookform/resolvers": "^3.10.0",
