@@ -5,9 +5,13 @@ import Image from "next/image";
 import { LineGroupLink } from "@/utils/information";
 
 interface UserData {
-    name?: string;
-    points?: number;
-    referral_code?: string;
+    firstName: string;
+    lastName: string;
+    department: string;
+    major: string;
+    npm: string;
+    selectedPath: string;
+    referralCode: string;
 }
 
 interface RegisteredDashboardProps {
@@ -30,10 +34,14 @@ export const RegisteredDashboard = ({ userData }: RegisteredDashboardProps) => {
                     <div className="flex flex-col justify-between w-1/2 h-full">
                         <div>
                             <h1 className="text-white text-4xl font-bold mb-1 truncate">
-                                Hi, {userData.name || "Nama"}!
+                                Hi, {userData.firstName || "Nama"}!
                             </h1>
                             <span className="text-gray-300 text-xl">
-                                Kamu terdaftar di Path ....!
+                                Kamu terdaftar di path{" "}
+                                <span className="font-bold text-white">
+                                    {userData.selectedPath}
+                                </span>
+                                !
                             </span>
                         </div>
 
@@ -54,7 +62,7 @@ export const RegisteredDashboard = ({ userData }: RegisteredDashboardProps) => {
                     </div>
                     <div className="text-right">
                         <span className="text-[#8B7CF6] text-4xl font-bold">
-                            {userData.points || "700"}
+                            {userData.npm || "700"}
                         </span>
                         <span className="text-white text-lg ml-1">Points</span>
                     </div>

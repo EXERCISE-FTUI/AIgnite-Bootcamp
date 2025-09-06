@@ -9,16 +9,51 @@ begin
   end if;
 end $$;
 
+-- Function to generate unique random referral code
+create or replace function generate_referral_code()
+returns text as $$
+declare
+  chars text := 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  result text := '';
+  i integer;
+  attempts integer := 0;
+  max_attempts integer := 100;
+begin
+  loop
+    result := '';
+    for i in 1..6 loop
+      result := result || substr(chars, floor(random() * length(chars) + 1)::integer, 1);
+    end loop;
+    
+    -- Check if this code already exists
+    if not exists (select 1 from users where "referralCode" = result) then
+      return result;
+    end if;
+    
+    attempts := attempts + 1;
+    if attempts >= max_attempts then
+      -- If we can't generate a unique code after max_attempts, throw an error
+      raise exception 'Unable to generate unique referral code after % attempts', max_attempts;
+    end if;
+  end loop;
+end;
+$$ language plpgsql;
+
 -- USERS TABLE
 create table if not exists public.users (
   user_id uuid primary key references auth.users(id) on delete cascade,
   email text not null,
   status submission_status not null default 'NOT_SUBMITTED',
+  "referralCode" text unique default generate_referral_code(),
+  points integer not null default 0,
   created_at timestamptz not null default now()
 );
 
 -- Uniqueness for email (case-insensitive)
 create unique index if not exists users_email_unique_idx on public.users (lower(email));
+
+-- Unique index for referral code
+create unique index if not exists users_referral_code_unique_idx on public.users ("referralCode");
 
 -- Enable RLS for users
 alter table public.users enable row level security;

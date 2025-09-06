@@ -18,13 +18,10 @@ const FormSubmissionWithUpload: React.FC<FormProps> = ({ email }) => {
             email: "",
             noTelp: "",
             idLine: "",
+            department: "",
             major: "",
             npm: "",
             selectedPath: "",
-
-            // Kode Referral (Optional)
-            referralCode: "",
-
             // Upload dokumen
             cvAtsUrl: "",
             essayMotletUrl: "",

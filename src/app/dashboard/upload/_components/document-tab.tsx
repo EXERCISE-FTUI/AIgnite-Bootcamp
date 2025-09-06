@@ -360,6 +360,7 @@ export default function DocumentTab({
             email: formData.email,
             noTelp: formData.noTelp,
             idLine: formData.idLine,
+            department: formData.department,
             major: formData.major,
             npm: formData.npm,
             selectedPath: formData.selectedPath,
