@@ -70,6 +70,7 @@ create table if not exists public.form_submission (
   email text not null,
   "noTelp" text not null,
   "idLine" text not null,
+  department text not null,
   major text not null,
   npm text not null,
   "selectedPath" selected_path not null,
