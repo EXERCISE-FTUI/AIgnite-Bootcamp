@@ -50,23 +50,38 @@ begin
   end if;
 end $$;
 
+-- Enum for selected path
+do $$
+begin
+  if not exists (select 1 from pg_type where typname = 'selected_path') then
+    create type selected_path as enum ('software', 'hardware', 'uiux');
+  end if;
+end $$;
+
 -- FORM_SUBMISSION TABLE
 -- Column names intentionally match the app's JSON keys (camelCase) exactly.
 create table if not exists public.form_submission (
   id uuid primary key default gen_random_uuid(),
   user_id uuid not null references auth.users(id) on delete cascade,
-  "fullName" text not null,
-  major text not null,
-  department text not null,
-  division1 text not null,
-  division2 text not null,
-  "folderUrl" text not null,
-  npm text not null,
-  batch text not null,
+  
+  -- Data diri
+  "firstName" text not null,
+  "lastName" text not null,
   email text not null,
-  phone text not null,
+  "noTelp" text not null,
   "idLine" text not null,
-  "otherContacts" text,
+  major text not null,
+  npm text not null,
+  "selectedPath" selected_path not null,
+  
+  -- Kode Referral (Optional)
+  "referralCode" text,
+  
+  -- Upload dokumen
+  "cvAtsUrl" text not null,
+  "essayMotletUrl" text not null,
+  "twibbonUrl" text not null,
+  
   created_at timestamptz not null default now(),
   unique (user_id)
 );
