@@ -11,6 +11,7 @@ const inter = Inter({
 
 import HelpButton from "@/components/helpButton/HelpButton";
 import { createClient } from "@/utils/supabase/server";
+import ReferralCapture from "@/components/ReferralCapture";
 
 async function checkUser() {
     const supabase = createClient();
@@ -31,6 +32,7 @@ export default async function RootLayout({
                     className={`${inter.className} w-full`}
                     style={{ backgroundColor: "rgba(0, 0, 0, 0)" }}
                 >
+                    <ReferralCapture />
                     {children}
                     <Toaster />
                     <div className="pb-16" />

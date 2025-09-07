@@ -1,5 +1,4 @@
 import { createClient } from "@/utils/supabase/server";
-import FormSubmissionWithUpload from "./page";
 import { redirect } from "next/navigation";
 
 async function checkUser() {
@@ -11,16 +10,27 @@ async function checkUser() {
 
 async function checkStatus(id: string) {
     const supabase = createClient();
-    const { data } = await (await supabase)
+    const { data, error } = await (await supabase)
         .from("users")
         .select("*")
         .eq("user_id", id)
         .single();
 
+    if (error) {
+        console.log(
+            "User not found in users table, will be created on registration"
+        );
+        return null;
+    }
+
     return data;
 }
 
-export default async function RootLayout() {
+export default async function RootLayout({
+    children,
+}: {
+    children: React.ReactNode;
+}) {
     const data = await checkUser();
 
     if (!data?.user?.id) {
@@ -28,17 +38,10 @@ export default async function RootLayout() {
     } else {
         const status = await checkStatus(data.user.id);
 
-        console.log("status", status);
         if (status.status == "SUBMITTED") {
             redirect("/dashboard");
         }
     }
 
-    return (
-        <div>
-            <FormSubmissionWithUpload
-                email={data?.user?.email || ""}
-            ></FormSubmissionWithUpload>
-        </div>
-    );
+    return children;
 }

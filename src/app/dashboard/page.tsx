@@ -1,51 +1,91 @@
-import NormalWidthDashboard from "@/components/dashboard/normal_width_dashboard";
-import SmallerWidthDashboard from "@/components/dashboard/smaller_width_dashboard";
-import {createClient} from "@/utils/supabase/server";
-import {redirect} from "next/navigation";
-// import {useRouter} from "next/navigation";
-// import {useEffect, useState} from "react";
+import { createClient } from "@/utils/supabase/server";
+import { NotRegisteredDashboard } from "@/components/dashboard/not-registered-dashboard";
+import { FormData } from "./upload/_components/registration-form";
+import { LeaderboardSection } from "@/components/dashboard/leaderboard";
+
+export interface UserData extends FormData {
+    points: number;
+    code: string;
+    error?: string;
+}
+
+export interface LeaderboardUser {
+    user_id: string;
+    full_name: string;
+    points: number;
+    rank: number;
+}
 
 async function fetchUserData() {
-	const supabase = createClient();
+    const supabase = createClient();
 
-	const {data: auth, error} = await (await supabase).auth.getUser();
+    const { data: auth, error } = await (await supabase).auth.getUser();
 
-	if (error) {
-		return {error: error.message};
-	}
+    if (error) {
+        return { error: error.message };
+    }
 
-	const {data: user, error: userError} = await (await supabase)
-		.from("users")
-		.select("*")
-		.eq("user_id", auth?.user?.id)
-		.single();
+    // If no user is authenticated, return null (not an error)
+    if (!auth?.user) {
+        return null;
+    }
 
-	if (userError) {
-		return {error: userError.message};
-	}
+    // Fetch user data from users table (referralCode, points, etc.)
+    const { data: userData, error: userError } = await (await supabase)
+        .from("users")
+        .select("points,code")
+        .eq("user_id", auth.user.id)
+        .single();
 
-	return user;
+    if (userError) {
+        return { error: userError.message };
+    }
+
+    // Fetch form submission data if it exists
+    const { data: formData, error: formError } = await (await supabase)
+        .from("form_submission")
+        .select("*")
+        .eq("user_id", auth.user.id)
+        .single();
+
+    if (formError) {
+        return { error: formError.message };
+    }
+
+    // Combine and flatten the data
+    const combinedUser = {
+        ...userData,
+        ...formData,
+        user_id: auth.user.id,
+    };
+
+    console.log("user", combinedUser);
+    return combinedUser;
 }
 
 export const dynamic = "force-dynamic";
 
 const Dashboard = async () => {
-	const userData = await fetchUserData();
+    const userData: UserData = await fetchUserData();
+    console.log("userData", userData);
 
-	if (!userData || userData.error) {
-		redirect("/");
-	}
+    // // If user is logged in, show logged view
+    // if (userData && !userData.error) {
+    //     return (
+    //         <>
+    //             <RegisteredDashboard {...userData} />
+    //             <LeaderboardSection />
+    //         </>
+    //     );
+    // }
 
-	return (
-		<div className="w-full h-auto bg-white_2 lg:mt-20">
-			<div className="hidden md:flex">
-				<NormalWidthDashboard userData={userData} />
-			</div>
-			<div className="md:hidden">
-				<SmallerWidthDashboard userData={userData} />
-			</div>
-		</div>
-	);
+    // If user is not logged in, show unlogged view
+    return (
+        <>
+            <NotRegisteredDashboard />
+            <LeaderboardSection />
+        </>
+    );
 };
 
 export default Dashboard;

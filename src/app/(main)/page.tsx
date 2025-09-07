@@ -1,11 +1,9 @@
-// import Hello from "@/app/dashboard/home/page";
-
-import Dashboard from "../dashboard/page";
+import HomePage from "../dashboard/home/page";
 
 export default function Home() {
     return (
         <>
-            <Dashboard />
+            <HomePage />
         </>
     );
 }

@@ -1,58 +1,19 @@
-"use client";
-
-import React from "react";
+import { createClient } from "@/utils/supabase/server";
 import RegistrationForm from "./_components/registration-form";
-import {useForm} from "react-hook-form";
+import { redirect } from "next/navigation";
 
-type FormProps = {
-	email: string;
-};
+export default async function FormSubmissionWithUpload() {
+    const supabase = createClient();
+    const { data: user } = await (await supabase).auth.getUser();
+    const email = user?.user?.email;
 
-const FormSubmissionWithUpload: React.FC<FormProps> = ({email}) => {
-	const form = useForm({
-		defaultValues: {
-			user_id: "",
-			fullName: "",
-			npm: "",
-			department: "",
-			major: "",
-			force: "",
-			email: "",
-			phone: "",
-			idLine: "",
-			otherContacts: "",
-			division1: "",
-			division2: "",
-			folderUrl: "",
-			cvUrl: "",
-			motivationLetterUrl: "",
-			assignment1Url: "",
-			assignment2Url: "",
-			instagramStoryUrl: "",
-			twibbonUrl: "",
-		},
-	});
+    if (!email) {
+        redirect("/");
+    }
 
-	const {handleSubmit, control} = form;
-
-	const onSubmit = () => {
-		// setIsLoading(true);
-		// handleNext();
-	};
-
-	return (
-		<>
-			<div className="lg:mt-24">
-				<RegistrationForm
-					form={form}
-					onSubmit={onSubmit}
-					handleSubmit={handleSubmit}
-					control={control}
-					email={email}
-				/>
-			</div>
-		</>
-	);
-};
-
-export default FormSubmissionWithUpload;
+    return (
+        <div className="lg:mt-24">
+            <RegistrationForm email={email} />
+        </div>
+    );
+}
