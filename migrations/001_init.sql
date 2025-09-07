@@ -26,7 +26,7 @@ begin
     end loop;
     
     -- Check if this code already exists
-    if not exists (select 1 from users where "referralCode" = result) then
+    if not exists (select 1 from users where "code" = result) then
       return result;
     end if;
     
@@ -53,7 +53,7 @@ create table if not exists public.users (
 create unique index if not exists users_email_unique_idx on public.users (lower(email));
 
 -- Unique index for referral code
-create unique index if not exists users_referral_code_unique_idx on public.users ("referralCode");
+create unique index if not exists users_referral_code_unique_idx on public.users ("code");
 
 -- Enable RLS for users
 alter table public.users enable row level security;

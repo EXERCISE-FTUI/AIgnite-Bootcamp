@@ -38,51 +38,10 @@ export async function POST(req) {
         if (usersError) {
             throw new Error(usersError.message);
         }
-        console.log("reqData", reqData);
-        // Award points to referrer if referral code was used
-        if (reqData.referralCode && reqData.referralCode.trim() !== "") {
-            try {
-                // Find the user who owns this referral code
-                const { data: referrer, error: referrerError } = await (
-                    await supabase
-                )
-                    .from("users")
-                    .select("user_id, points")
-                    .eq("code", reqData.referralCode.trim().toUpperCase())
-                    .single();
-
-                console.log(
-                    "code: ",
-                    reqData.referralCode.trim().toUpperCase()
-                );
-                console.log("referrer", referrer);
-
-                if (!referrerError && referrer) {
-                    // Award 100 points to the referrer
-                    const { error: pointsError } = await (
-                        await supabase
-                    )
-                        .from("users")
-                        .update({ points: referrer.points + 100 })
-                        .eq("user_id", referrer.user_id);
-
-                    if (pointsError) {
-                        console.error(
-                            "Error awarding referral points:",
-                            pointsError
-                        );
-                        // Don't fail the submission if point award fails
-                    } else {
-                        console.log(
-                            `Awarded 100 points to referrer ${referrer.user_id} for referral code ${reqData.referralCode}`
-                        );
-                    }
-                }
-            } catch (referralError) {
-                console.error("Error processing referral:", referralError);
-                // Don't fail the submission if referral processing fails
-            }
-        }
+        // Points are now handled automatically by database triggers
+        // - Referral points: awarded when form_submission is inserted with referralCode
+        // - Submission points: awarded when form_submission is inserted
+        console.log("Form submitted successfully, points awarded via triggers");
 
         return NextResponse.json(
             { data: "Submission successful" },

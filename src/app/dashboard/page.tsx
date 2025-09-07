@@ -6,7 +6,7 @@ import { LeaderboardSection } from "@/components/dashboard/leaderboard";
 
 export interface UserData extends FormData {
     points: number;
-    code: string;
+    referralCode: string;
     error?: string;
 }
 
@@ -34,7 +34,7 @@ async function fetchUserData() {
     // Fetch user data from users table (referralCode, points, etc.)
     const { data: userData, error: userError } = await (await supabase)
         .from("users")
-        .select("points,code")
+        .select("points,referralCode")
         .eq("user_id", auth.user.id)
         .single();
 
