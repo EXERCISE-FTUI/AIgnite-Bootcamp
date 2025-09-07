@@ -2,6 +2,12 @@ import { createClient } from "@/utils/supabase/server";
 import { RegisteredDashboard } from "@/components/dashboard/registered-dashboard";
 import { NotRegisteredDashboard } from "@/components/dashboard/not-registered-dashboard";
 import Image from "next/image";
+import { FormData } from "./upload/_components/registration-form";
+
+export interface UserData extends FormData {
+    points: number;
+    code: string;
+}
 
 async function fetchUserData() {
     const supabase = createClient();
@@ -17,17 +23,37 @@ async function fetchUserData() {
         return null;
     }
 
-    const { data: user, error: userError } = await (await supabase)
-        .from("form_submission")
-        .select("*")
+    // Fetch user data from users table (referralCode, points, etc.)
+    const { data: userData, error: userError } = await (await supabase)
+        .from("users")
+        .select("points,code")
         .eq("user_id", auth.user.id)
         .single();
 
     if (userError) {
         return { error: userError.message };
     }
-    console.log("user", user);
-    return user;
+
+    // Fetch form submission data if it exists
+    const { data: formData, error: formError } = await (await supabase)
+        .from("form_submission")
+        .select("*")
+        .eq("user_id", auth.user.id)
+        .single();
+
+    if (formError) {
+        return { error: formError.message };
+    }
+
+    // Combine and flatten the data
+    const combinedUser = {
+        ...userData,
+        ...formData,
+        user_id: auth.user.id,
+    };
+
+    console.log("user", combinedUser);
+    return combinedUser;
 }
 
 // Mock data for leaderboard
@@ -50,13 +76,14 @@ const lowerRankingsData = [
 export const dynamic = "force-dynamic";
 
 const Dashboard = async () => {
-    const userData = await fetchUserData();
+    const userData: UserData = await fetchUserData();
+    console.log("userData", userData);
 
     // If user is logged in, show logged view
-    if (userData && !userData.error) {
+    if (userData) {
         return (
             <>
-                <RegisteredDashboard userData={userData} />
+                <RegisteredDashboard {...userData} />
                 <LeaderboardSection />
             </>
         );

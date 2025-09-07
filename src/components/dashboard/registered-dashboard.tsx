@@ -3,22 +3,51 @@
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { LineGroupLink } from "@/utils/information";
+import { UserData } from "@/app/dashboard/page";
+import { CopyIcon, LinkIcon } from "lucide-react";
+import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
 
-interface UserData {
-    firstName: string;
-    lastName: string;
-    department: string;
-    major: string;
-    npm: string;
-    selectedPath: string;
-    referralCode: string;
-}
+export const RegisteredDashboard = (userData: UserData) => {
+    const [copyTooltip, setCopyTooltip] = useState("");
+    const [linkTooltip, setLinkTooltip] = useState("");
+    const { toast } = useToast();
 
-interface RegisteredDashboardProps {
-    userData: UserData;
-}
+    const copyReferralCode = async () => {
+        try {
+            await navigator.clipboard.writeText(userData.code);
+            toast({
+                title: "Copied!",
+                description: "Referral code copied to clipboard",
+            });
+        } catch (err) {
+            console.error("Failed to copy referral code:", err);
+            toast({
+                title: "Failed to copy",
+                description: "Please try again",
+                variant: "destructive",
+            });
+        }
+    };
 
-export const RegisteredDashboard = ({ userData }: RegisteredDashboardProps) => {
+    const copyShareableLink = async () => {
+        const shareableLink = `bootcamp.exerciseftui.com/dashboard/upload?referral=${userData.code}`;
+        try {
+            await navigator.clipboard.writeText(shareableLink);
+            toast({
+                title: "Copied!",
+                description: "Shareable link copied to clipboard",
+            });
+        } catch (err) {
+            console.error("Failed to copy shareable link:", err);
+            toast({
+                title: "Failed to copy",
+                description: "Please try again",
+                variant: "destructive",
+            });
+        }
+    };
+
     return (
         <div className="w-full h-auto flex flex-col gap-12 p-16 items-center pt-36 mb-20 relative overflow-hidden">
             <Image
@@ -60,11 +89,57 @@ export const RegisteredDashboard = ({ userData }: RegisteredDashboardProps) => {
                             Join Line Group
                         </Button>
                     </div>
-                    <div className="text-right">
-                        <span className="text-[#8B7CF6] text-4xl font-bold">
-                            {userData.npm || "700"}
-                        </span>
-                        <span className="text-white text-lg ml-1">Points</span>
+                    <div className="text-right flex flex-col justify-between h-full">
+                        <div>
+                            <span className="text-[#8B7CF6] text-6xl font-bold">
+                                {userData.points}
+                            </span>
+                            <span className="text-white text-3xl ml-1">
+                                Points
+                            </span>
+                        </div>
+                        <div className="text-white">
+                            <p className="text-xl">Referral Code</p>
+                            <div className="flex h-10 gap-1">
+                                <div className="bg-white rounded-md text-black w-fit p-1 px-4 font-bold text-2xl">
+                                    {userData.code}
+                                </div>
+                                <div className="relative">
+                                    <button
+                                        onClick={copyReferralCode}
+                                        onMouseEnter={() =>
+                                            setCopyTooltip("visible")
+                                        }
+                                        onMouseLeave={() => setCopyTooltip("")}
+                                        className="bg-purple-600 rounded-md h-full w-12 flex items-center justify-center hover:bg-purple-700 transition-colors"
+                                    >
+                                        <CopyIcon size={20} />
+                                    </button>
+                                    {copyTooltip && (
+                                        <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 px-2 py-1 bg-black text-white text-sm rounded whitespace-nowrap z-10">
+                                            Copy code
+                                        </div>
+                                    )}
+                                </div>
+                                <div className="relative">
+                                    <button
+                                        onClick={copyShareableLink}
+                                        onMouseEnter={() =>
+                                            setLinkTooltip("visible")
+                                        }
+                                        onMouseLeave={() => setLinkTooltip("")}
+                                        className="bg-purple-800 rounded-md h-full w-12 flex items-center justify-center hover:bg-purple-900 transition-colors"
+                                    >
+                                        <LinkIcon size={20} />
+                                    </button>
+                                    {linkTooltip && (
+                                        <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 px-2 py-1 bg-black text-white text-sm rounded whitespace-nowrap z-10">
+                                            Copy shareable link
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
