@@ -3,10 +3,9 @@ import { Button } from "@/components/ui/button";
 import { LineGroupLink } from "@/utils/information";
 import { HomeIcon } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
 import Confetti from "react-confetti";
 
-function page() {
+function Page() {
     return (
         <div className="flex flex-col items-center w-full justify-center text-center min-h-screen space-y-4 ">
             <Confetti
@@ -30,15 +29,14 @@ function page() {
                     Stay tuned for the Exciting next steps!
                 </h2>
                 <div className="flex justify-center gap-4 md:gap-7 w-full">
-                    <Link href="/dashboard">
-                        <Button
-                            variant={"outline"}
-                            className="hover:-translate-y-0.5 ease-in-out transform transition-all"
-                        >
-                            <HomeIcon />
-                            Home
-                        </Button>
-                    </Link>
+                    <Button
+                        variant={"outline"}
+                        onClick={() => (window.location.href = "/dashboard")}
+                        className="hover:-translate-y-0.5 ease-in-out transform transition-all"
+                    >
+                        <HomeIcon />
+                        Home
+                    </Button>
                     <Button
                         className="bg-[#00C200] hover:bg-[#00C200] hover:-translate-y-0.5 ease-in-out transform transition-all"
                         onClick={() => {
@@ -59,4 +57,4 @@ function page() {
     );
 }
 
-export default page;
+export default Page;

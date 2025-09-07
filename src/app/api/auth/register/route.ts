@@ -13,6 +13,10 @@ export async function POST(req: Request) {
         ).auth.signUp({
             email,
             password,
+            options: {
+                emailRedirectTo:
+                    process.env.NEXT_PUBLIC_BASE_URL + "/dashboard",
+            },
         });
 
         console.log("AUTH: ", auth);

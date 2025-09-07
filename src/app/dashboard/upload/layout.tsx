@@ -38,15 +38,10 @@ export default async function RootLayout({
     } else {
         const status = await checkStatus(data.user.id);
 
-        console.log("status", status);
         if (status.status == "SUBMITTED") {
             redirect("/dashboard");
         }
     }
 
-    return (
-        <html lang="en">
-            <body>{children}</body>
-        </html>
-    );
+    return children;
 }
