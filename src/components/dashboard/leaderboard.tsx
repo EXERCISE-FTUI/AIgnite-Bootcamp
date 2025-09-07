@@ -2,13 +2,35 @@ import { LeaderboardUser } from "@/app/dashboard/page";
 import auraEffect from "@/../public/aura-effect.png";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import { createClient } from "@/utils/supabase/server";
+
+async function fetchLeaderboard(): Promise<LeaderboardUser[]> {
+    const supabase = createClient();
+
+    try {
+        const { data, error } = await (await supabase).rpc("get_leaderboard");
+
+        if (error) {
+            console.error("Error fetching leaderboard:", error);
+            return [];
+        }
+
+        return data || [];
+    } catch (error) {
+        console.error("Error fetching leaderboard:", error);
+        return [];
+    }
+}
 
 // Leaderboard component (shared between logged and unlogged views)
-export const LeaderboardSection = ({
-    leaderboardData,
-}: {
-    leaderboardData: LeaderboardUser[];
-}) => {
+export const LeaderboardSection = async () => {
+    const leaderboardData = await fetchLeaderboard();
+    leaderboardData.push({
+        user_id: "1",
+        full_name: "John Doe",
+        points: 100,
+        rank: 3,
+    });
     // Show fallback message if no data
     if (!leaderboardData || leaderboardData.length === 0) {
         return (
@@ -62,7 +84,7 @@ export const LeaderboardSection = ({
                         "radial-gradient(at -200% 200%, #6A4FCF, #10162C)",
                 }}
             >
-                <h2 className="text-5xl font-bold text-white text-center">
+                <h2 className="lg:text-5xl text-4xl lg:mb-0 mb-8 font-bold text-white text-center">
                     Leaderboard
                 </h2>
 
@@ -71,9 +93,48 @@ export const LeaderboardSection = ({
                     alt="auraEffect"
                     width={500}
                     height={100}
-                    className="object-cover aspect-contain w-auto opacity-70 pt-8"
+                    className="object-cover aspect-contain w-auto opacity-70 pt-8 lg:block hidden"
                 />
-                <div className="flex justify-center items-end space-x-20">
+                {/* Mobile view - 1st, 2nd, 3rd order */}
+                <div className="flex flex-col justify-center items-center space-y-4 lg:hidden">
+                    {[
+                        leaderboardData.find(user => user.rank === 1),
+                        leaderboardData.find(user => user.rank === 2),
+                        leaderboardData.find(user => user.rank === 3),
+                    ].map(user => {
+                        if (!user) return null;
+                        const medalType =
+                            user.rank === 1
+                                ? "gold"
+                                : user.rank === 2
+                                ? "silver"
+                                : "bronze";
+                        return (
+                            <div
+                                key={user.user_id}
+                                className={cn(
+                                    "flex flex-col items-center gap-2"
+                                )}
+                            >
+                                <div className="w-20 aspect-square rounded-full bg-white flex items-center justify-center relative">
+                                    {getMedalIcon(medalType)}
+                                </div>
+
+                                <p className="font-bold text-xl truncate w-40 text-white text-center">
+                                    {user.full_name}
+                                </p>
+                                <div className="w-24 flex flex-col justify-center items-center text-white">
+                                    <div className="bg-white tracking-wide backdrop-blur-3xl bg-opacity-20 px-4 truncate max-w-32 text-[#A259FF] py-1 rounded-full text-xl font-bold ">
+                                        {user.points}
+                                    </div>
+                                </div>
+                            </div>
+                        );
+                    })}
+                </div>
+
+                {/* Desktop view - 2nd, 1st, 3rd order (podium style) */}
+                <div className="hidden lg:flex flex-row justify-center items-end lg:space-x-20">
                     {[
                         leaderboardData.find(user => user.rank === 2),
                         leaderboardData.find(user => user.rank === 1),

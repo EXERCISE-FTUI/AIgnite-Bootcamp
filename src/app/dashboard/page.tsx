@@ -1,5 +1,4 @@
 import { createClient } from "@/utils/supabase/server";
-import { RegisteredDashboard } from "@/components/dashboard/registered-dashboard";
 import { NotRegisteredDashboard } from "@/components/dashboard/not-registered-dashboard";
 import { FormData } from "./upload/_components/registration-form";
 import { LeaderboardSection } from "@/components/dashboard/leaderboard";
@@ -64,47 +63,27 @@ async function fetchUserData() {
     return combinedUser;
 }
 
-async function fetchLeaderboard(): Promise<LeaderboardUser[]> {
-    const supabase = createClient();
-
-    try {
-        const { data, error } = await (await supabase).rpc("get_leaderboard");
-
-        if (error) {
-            console.error("Error fetching leaderboard:", error);
-            return [];
-        }
-
-        return data || [];
-    } catch (error) {
-        console.error("Error fetching leaderboard:", error);
-        return [];
-    }
-}
-
 export const dynamic = "force-dynamic";
 
 const Dashboard = async () => {
     const userData: UserData = await fetchUserData();
-    const leaderboardData = await fetchLeaderboard();
     console.log("userData", userData);
-    console.log("leaderboardData", leaderboardData);
 
-    // If user is logged in, show logged view
-    if (userData && !userData.error) {
-        return (
-            <>
-                <RegisteredDashboard {...userData} />
-                <LeaderboardSection leaderboardData={leaderboardData} />
-            </>
-        );
-    }
+    // // If user is logged in, show logged view
+    // if (userData && !userData.error) {
+    //     return (
+    //         <>
+    //             <RegisteredDashboard {...userData} />
+    //             <LeaderboardSection />
+    //         </>
+    //     );
+    // }
 
     // If user is not logged in, show unlogged view
     return (
         <>
             <NotRegisteredDashboard />
-            <LeaderboardSection leaderboardData={leaderboardData} />
+            <LeaderboardSection />
         </>
     );
 };

@@ -54,7 +54,7 @@ export const RegisteredDashboard = (userData: UserData) => {
 
     return (
         <>
-            <div className="w-full h-auto flex flex-col gap-12 p-16 items-center pt-36 mb-20 relative overflow-hidden">
+            <div className="w-full h-auto flex flex-col gap-12 p-4 lg:p-16 items-center pt-36 mb-20 relative overflow-hidden">
                 <Image
                     src="/merchPoster.png"
                     alt="merch poster"
@@ -62,10 +62,10 @@ export const RegisteredDashboard = (userData: UserData) => {
                     height={100}
                     className="w-full h-60 object-cover bg-white"
                 />
-                <div className="bg-black/20 backdrop-blur-md w-3/4 border border-white/20 rounded-lg h-60 p-12 flex flex-col justify-between">
+                <div className="bg-black/20 backdrop-blur-md w-full lg:w-3/4 border border-white/20 rounded-lg h-auto lg:h-60 p-8 lg:p-12 flex flex-col justify-between">
                     {/* Top section with greeting and points */}
-                    <div className="flex justify-between items-start h-full">
-                        <div className="flex flex-col justify-between w-1/2 h-full">
+                    <div className="flex lg:flex-row flex-col justify-between items-start h-full lg:gap-0 gap-8">
+                        <div className="flex flex-col justify-between w-full lg:w-1/2 h-full">
                             <div>
                                 <h1 className="text-white text-4xl font-bold mb-1 truncate">
                                     Hi, {userData.firstName || "Nama"}!
@@ -94,7 +94,7 @@ export const RegisteredDashboard = (userData: UserData) => {
                                 Join Line Group
                             </Button>
                         </div>
-                        <div className="text-right flex flex-col justify-between h-full">
+                        <div className="text-right flex flex-col justify-between h-full self-end">
                             <div>
                                 <span className="text-[#8B7CF6] text-6xl font-bold">
                                     {userData.points}
@@ -168,7 +168,7 @@ export const RegisteredDashboard = (userData: UserData) => {
                 ></div>
             </div>
 
-            <div className="w-full h-auto flex flex-col max-w-4xl mx-auto mb-20">
+            <div className="w-full h-auto flex flex-col max-w-4xl mx-auto mb-20 lg:p-0 p-4">
                 <h2 className="text-4xl font-bold text-black pb-4">Missions</h2>
                 <div className="flex flex-col gap-2">
                     {" "}
@@ -178,10 +178,10 @@ export const RegisteredDashboard = (userData: UserData) => {
                                 key={mission.title}
                                 className="w-full flex cursor-default justify-between rounded-md items-center bg-[#11162F] px-4 py-2"
                             >
-                                <h3 className="text-3xl text-white">
+                                <h3 className="text-lg lg:text-3xl text-white">
                                     {mission.title}
                                 </h3>
-                                <p className="text-[#A259FF] text-3xl">
+                                <p className="text-[#A259FF] text-lg lg:text-3xl">
                                     {mission.points && mission.points > 0
                                         ? `${mission.points} Points`
                                         : ""}
