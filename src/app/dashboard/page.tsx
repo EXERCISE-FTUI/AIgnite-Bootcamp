@@ -34,7 +34,7 @@ async function fetchUserData() {
     // Fetch user data from users table (referralCode, points, etc.)
     const { data: userData, error: userError } = await (await supabase)
         .from("users")
-        .select("points,referralCode")
+        .select("points,code")
         .eq("user_id", auth.user.id)
         .single();
 

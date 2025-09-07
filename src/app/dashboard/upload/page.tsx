@@ -1,45 +1,19 @@
-"use client";
+import { createClient } from "@/utils/supabase/server";
 import RegistrationForm from "./_components/registration-form";
-import { useForm } from "react-hook-form";
+import { redirect } from "next/navigation";
 
-export default function FormSubmissionWithUpload() {
-    console.log("FormSubmissionWithUpload");
-    const form = useForm({
-        defaultValues: {
-            user_id: "",
-            // Data diri
-            firstName: "",
-            lastName: "",
-            email: "",
-            noTelp: "",
-            idLine: "",
-            department: "",
-            major: "",
-            npm: "",
-            selectedPath: "",
-            // Upload dokumen
-            cvAtsUrl: "",
-            essayMotletUrl: "",
-            twibbonUrl: "",
-        },
-    });
+export default async function FormSubmissionWithUpload() {
+    const supabase = createClient();
+    const { data: user } = await (await supabase).auth.getUser();
+    const email = user?.user?.email;
 
-    const { handleSubmit, control } = form;
-
-    const onSubmit = () => {
-        // setIsLoading(true);
-        // handleNext();
-    };
+    if (!email) {
+        redirect("/");
+    }
 
     return (
         <div className="lg:mt-24">
-            <RegistrationForm
-                form={form}
-                onSubmit={onSubmit}
-                handleSubmit={handleSubmit}
-                control={control}
-                email=""
-            />
+            <RegistrationForm email={email} />
         </div>
     );
 }

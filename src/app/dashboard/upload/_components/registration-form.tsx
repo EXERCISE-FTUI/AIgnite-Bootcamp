@@ -12,7 +12,7 @@ import {
     FormLabel,
     FormMessage,
 } from "@/components/ui/form";
-import { Control, SubmitHandler, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import DocumentTab from "./document-tab";
 import SelectInput from "./SelectInput";
 import { DepartementsList } from "@/utils/information";
@@ -103,20 +103,10 @@ export interface FormData {
 }
 
 interface RegistrationFormProps {
-    form: ReturnType<typeof useForm<FormData>>;
-    onSubmit: SubmitHandler<FormData>;
-    handleSubmit: (callback: (data: FormData) => void) => () => void;
-    control: Control<FormData>;
     email: string;
 }
 
-export default function RegistrationForm({
-    form,
-    onSubmit,
-    handleSubmit,
-    control,
-    email,
-}: RegistrationFormProps) {
+export default function RegistrationForm({ email }: RegistrationFormProps) {
     const [activeTab, setActiveTab] = React.useState("personal");
     const [referralValidation, setReferralValidation] = useState<{
         status: "idle" | "loading" | "valid" | "invalid";
@@ -124,6 +114,28 @@ export default function RegistrationForm({
         referrerName?: string;
     }>({ status: "idle", message: "" });
     const [isReferralValid, setIsReferralValid] = useState(true); // Allow proceeding by default
+    const form = useForm<FormData>({
+        defaultValues: {
+            user_id: "",
+            // Data diri
+            firstName: "",
+            lastName: "",
+            email: email,
+            noTelp: "",
+            idLine: "",
+            department: "",
+            major: "",
+            npm: "",
+            selectedPath: "",
+            // Upload dokumen
+            cvAtsUrl: "",
+            essayMotletUrl: "",
+            twibbonUrl: "",
+            referralCode: "",
+        },
+    });
+    const { handleSubmit, control } = form;
+    const onSubmit = () => {};
 
     React.useEffect(() => {
         const savedFormData = localStorage.getItem("formData");
