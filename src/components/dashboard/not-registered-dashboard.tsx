@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Monitor, Settings, BarChart } from "lucide-react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const iconData = [
     { Icon: Monitor, label: "Monitor" },
@@ -11,6 +12,7 @@ const iconData = [
 ];
 
 export const NotRegisteredDashboard = () => {
+    const router = useRouter();
     return (
         <div className="w-full bg-white">
             <div className="min-h-screen flex items-center justify-center">
@@ -24,9 +26,13 @@ export const NotRegisteredDashboard = () => {
                                     Bootcamp
                                 </span>
                                 <br />
+                                11
                                 <span className="text-black">Now!</span>
                             </h1>
-                            <Button className="bg-[#804AF2] hover:bg-[#702EFC] text-white px-8 py-3 rounded-lg font-medium">
+                            <Button
+                                className="bg-[#804AF2] hover:bg-[#702EFC] text-white px-8 py-3 rounded-lg font-medium"
+                                onClick={() => router.push("/dashboard/upload")}
+                            >
                                 Join Now
                             </Button>
                         </div>

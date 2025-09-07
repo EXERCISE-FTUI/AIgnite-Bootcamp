@@ -38,7 +38,7 @@ export async function POST(req) {
         if (usersError) {
             throw new Error(usersError.message);
         }
-
+        console.log("reqData", reqData);
         // Award points to referrer if referral code was used
         if (reqData.referralCode && reqData.referralCode.trim() !== "") {
             try {
@@ -48,11 +48,14 @@ export async function POST(req) {
                 )
                     .from("users")
                     .select("user_id, points")
-                    .eq(
-                        "referralCode",
-                        reqData.referralCode.trim().toUpperCase()
-                    )
+                    .eq("code", reqData.referralCode.trim().toUpperCase())
                     .single();
+
+                console.log(
+                    "code: ",
+                    reqData.referralCode.trim().toUpperCase()
+                );
+                console.log("referrer", referrer);
 
                 if (!referrerError && referrer) {
                     // Award 100 points to the referrer

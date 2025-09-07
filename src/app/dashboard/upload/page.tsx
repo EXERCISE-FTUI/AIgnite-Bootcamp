@@ -1,14 +1,9 @@
 "use client";
-
-import React from "react";
 import RegistrationForm from "./_components/registration-form";
 import { useForm } from "react-hook-form";
 
-type FormProps = {
-    email: string;
-};
-
-const FormSubmissionWithUpload: React.FC<FormProps> = ({ email }) => {
+export default function FormSubmissionWithUpload() {
+    console.log("FormSubmissionWithUpload");
     const form = useForm({
         defaultValues: {
             user_id: "",
@@ -37,18 +32,14 @@ const FormSubmissionWithUpload: React.FC<FormProps> = ({ email }) => {
     };
 
     return (
-        <>
-            <div className="lg:mt-24">
-                <RegistrationForm
-                    form={form}
-                    onSubmit={onSubmit}
-                    handleSubmit={handleSubmit}
-                    control={control}
-                    email={email}
-                />
-            </div>
-        </>
+        <div className="lg:mt-24">
+            <RegistrationForm
+                form={form}
+                onSubmit={onSubmit}
+                handleSubmit={handleSubmit}
+                control={control}
+                email=""
+            />
+        </div>
     );
-};
-
-export default FormSubmissionWithUpload;
+}

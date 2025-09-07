@@ -42,6 +42,7 @@ const Page = () => {
             body: JSON.stringify(registerData),
         });
 
+        console.log(data);
         const response = await data.json();
 
         console.log(response);
