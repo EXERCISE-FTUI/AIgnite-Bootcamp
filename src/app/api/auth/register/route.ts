@@ -15,7 +15,7 @@ export async function POST(req: Request) {
             password,
         });
 
-        console.log("AUTH: ", error);
+        console.log("AUTH: ", auth);
 
         if (error) {
             return NextResponse.json({ error: error }, { status: 500 });
@@ -28,6 +28,7 @@ export async function POST(req: Request) {
                 user_id: auth.user?.id,
             });
 
+        console.log("INSERT ERROR: ", insertError);
         if (insertError) {
             return NextResponse.json(
                 { error: "Email already exists, try log in with google" },

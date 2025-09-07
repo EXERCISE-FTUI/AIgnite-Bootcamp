@@ -7,6 +7,7 @@ import { LeaderboardSection } from "@/components/dashboard/leaderboard";
 export interface UserData extends FormData {
     points: number;
     code: string;
+    error?: string;
 }
 
 export interface LeaderboardUser {
@@ -90,7 +91,7 @@ const Dashboard = async () => {
     console.log("leaderboardData", leaderboardData);
 
     // If user is logged in, show logged view
-    if (userData) {
+    if (userData && !userData.error) {
         return (
             <>
                 <RegisteredDashboard {...userData} />

@@ -44,7 +44,7 @@ create table if not exists public.users (
   user_id uuid primary key references auth.users(id) on delete cascade,
   email text not null,
   status submission_status not null default 'NOT_SUBMITTED',
-  "referralCode" text unique default generate_referral_code(),
+  "code" text unique default generate_referral_code(),
   points integer not null default 0,
   created_at timestamptz not null default now()
 );

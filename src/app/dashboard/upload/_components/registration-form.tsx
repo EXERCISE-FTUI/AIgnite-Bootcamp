@@ -16,6 +16,8 @@ import { Control, SubmitHandler, useForm } from "react-hook-form";
 import DocumentTab from "./document-tab";
 import SelectInput from "./SelectInput";
 import { DepartementsList } from "@/utils/information";
+import { useState, useCallback } from "react";
+import { CheckCircle, XCircle } from "lucide-react";
 
 export const Departements = [
     {
@@ -116,6 +118,12 @@ export default function RegistrationForm({
     email,
 }: RegistrationFormProps) {
     const [activeTab, setActiveTab] = React.useState("personal");
+    const [referralValidation, setReferralValidation] = useState<{
+        status: "idle" | "loading" | "valid" | "invalid";
+        message: string;
+        referrerName?: string;
+    }>({ status: "idle", message: "" });
+    const [isReferralValid, setIsReferralValid] = useState(true); // Allow proceeding by default
 
     React.useEffect(() => {
         const savedFormData = localStorage.getItem("formData");
@@ -133,12 +141,53 @@ export default function RegistrationForm({
         }
     }, [email, form]);
 
+    // Client-side referral code validation (6 alphanumeric characters)
+    const validateReferralCode = useCallback((referralCode: string) => {
+        if (!referralCode || referralCode.trim() === "") {
+            setReferralValidation({ status: "idle", message: "" });
+            setIsReferralValid(true);
+            return;
+        }
+
+        const trimmedCode = referralCode.trim();
+        // Validate: exactly 6 alphanumeric characters
+        const isValid = /^[A-Z0-9]{6}$/.test(trimmedCode);
+
+        if (isValid) {
+            setReferralValidation({
+                status: "valid",
+                message: "",
+            });
+            setIsReferralValid(true);
+        } else {
+            setReferralValidation({
+                status: "invalid",
+                message:
+                    "Referral code must be exactly 6 characters (letters and numbers only)",
+            });
+            setIsReferralValid(false);
+        }
+    }, []);
+
     const handleTabChange = async (value: string) => {
         if (value === "document") {
             const isValid = await form.trigger();
-            if (isValid) {
+            const referralCode = form.getValues("referralCode");
+
+            // Check if referral code is provided but invalid
+            const shouldBlockProgress =
+                referralCode && referralCode.trim() !== "" && !isReferralValid;
+
+            if (isValid && !shouldBlockProgress) {
                 setActiveTab(value);
                 handleSubmit(onSubmit)();
+            } else if (shouldBlockProgress) {
+                // Show error message for invalid referral code
+                setReferralValidation({
+                    status: "invalid",
+                    message:
+                        "Please enter a valid referral code or leave it empty",
+                });
             }
             return;
         }
@@ -413,12 +462,59 @@ export default function RegistrationForm({
                                             If you have a referral code from a
                                             friend, enter it here.
                                         </p>
-                                        <FormControl>
-                                            <Input
-                                                placeholder="Enter referral code"
-                                                {...field}
-                                            />
-                                        </FormControl>
+                                        <div className="relative">
+                                            <FormControl>
+                                                <Input
+                                                    placeholder="Enter referral code"
+                                                    maxLength={6}
+                                                    {...field}
+                                                    onChange={e => {
+                                                        const upperValue =
+                                                            e.target.value.toUpperCase();
+                                                        field.onChange(
+                                                            upperValue
+                                                        );
+                                                        validateReferralCode(
+                                                            upperValue
+                                                        );
+                                                    }}
+                                                    className={`pr-10 ${
+                                                        referralValidation.status ===
+                                                        "valid"
+                                                            ? "border-green-500"
+                                                            : referralValidation.status ===
+                                                              "invalid"
+                                                            ? "border-red-500"
+                                                            : ""
+                                                    }`}
+                                                />
+                                            </FormControl>
+                                            <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
+                                                {referralValidation.status ===
+                                                    "valid" && (
+                                                    <CheckCircle className="h-4 w-4 text-green-500" />
+                                                )}
+                                                {referralValidation.status ===
+                                                    "invalid" && (
+                                                    <XCircle className="h-4 w-4 text-red-500" />
+                                                )}
+                                            </div>
+                                        </div>
+                                        {referralValidation.message && (
+                                            <p
+                                                className={`text-sm mt-1 ${
+                                                    referralValidation.status ===
+                                                    "valid"
+                                                        ? "text-green-600"
+                                                        : referralValidation.status ===
+                                                          "invalid"
+                                                        ? "text-red-600"
+                                                        : "text-gray-600"
+                                                }`}
+                                            >
+                                                {referralValidation.message}
+                                            </p>
+                                        )}
                                         <FormMessage />
                                     </FormItem>
                                 )}
