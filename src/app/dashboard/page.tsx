@@ -6,7 +6,7 @@ import { LeaderboardSection } from "@/components/dashboard/leaderboard";
 
 export interface UserData extends FormData {
     points: number;
-    referralCode: string;
+    code: string;
     error?: string;
 }
 

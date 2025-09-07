@@ -16,8 +16,9 @@ import { useForm } from "react-hook-form";
 import DocumentTab from "./document-tab";
 import SelectInput from "./SelectInput";
 import { DepartementsList } from "@/utils/information";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { CheckCircle, XCircle } from "lucide-react";
+import { getReferralCode } from "@/utils/referral";
 
 export const Departements = [
     {
@@ -180,6 +181,15 @@ export default function RegistrationForm({ email }: RegistrationFormProps) {
             setIsReferralValid(false);
         }
     }, []);
+
+    // Auto-fill referral code from localStorage
+    useEffect(() => {
+        const storedReferralCode = getReferralCode();
+        if (storedReferralCode) {
+            form.setValue("referralCode", storedReferralCode);
+            validateReferralCode(storedReferralCode);
+        }
+    }, [form, validateReferralCode]);
 
     const handleTabChange = async (value: string) => {
         if (value === "document") {

@@ -15,7 +15,7 @@ export const RegisteredDashboard = (userData: UserData) => {
 
     const copyReferralCode = async () => {
         try {
-            await navigator.clipboard.writeText(userData.referralCode);
+            await navigator.clipboard.writeText(userData.code);
             toast({
                 title: "Copied!",
                 description: "Referral code copied to clipboard",
@@ -31,7 +31,11 @@ export const RegisteredDashboard = (userData: UserData) => {
     };
 
     const copyShareableLink = async () => {
-        const shareableLink = `bootcamp.exerciseftui.com/dashboard/upload?referral=${userData.referralCode}`;
+        const baseUrl =
+            typeof window !== "undefined"
+                ? window.location.origin
+                : "https://bootcamp.exerciseftui.com";
+        const shareableLink = `${baseUrl}/?referral=${userData.code}`;
         try {
             await navigator.clipboard.writeText(shareableLink);
             toast({
@@ -103,7 +107,7 @@ export const RegisteredDashboard = (userData: UserData) => {
                                 <p className="text-xl">Referral Code</p>
                                 <div className="flex h-10 gap-1">
                                     <div className="bg-white rounded-md text-black w-fit p-1 px-4 font-bold text-2xl">
-                                        {userData.referralCode}
+                                        {userData.code}
                                     </div>
                                     <div className="relative">
                                         <button
