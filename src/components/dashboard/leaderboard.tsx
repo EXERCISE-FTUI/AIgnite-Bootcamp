@@ -23,7 +23,9 @@ async function fetchLeaderboard(): Promise<LeaderboardUser[]> {
 }
 
 // Leaderboard component (shared between logged and unlogged views)
-export const LeaderboardSection = async () => {
+export const LeaderboardSection = async (
+    { hideDetails }: { hideDetails?: boolean } = { hideDetails: false }
+) => {
     const leaderboardData = await fetchLeaderboard();
     // Show fallback message if no data
     if (!leaderboardData || leaderboardData.length === 0) {
@@ -81,14 +83,16 @@ export const LeaderboardSection = async () => {
                 <h2 className="lg:text-5xl text-4xl lg:mb-0 mb-8 font-bold text-white text-center">
                     Leaderboard
                 </h2>
-
-                <Image
-                    src={auraEffect}
-                    alt="auraEffect"
-                    width={500}
-                    height={100}
-                    className="object-cover aspect-contain w-auto opacity-70 pt-8 lg:block hidden"
-                />
+                {hideDetails && <div className="h-8"></div>}
+                {!hideDetails && (
+                    <Image
+                        src={auraEffect}
+                        alt="auraEffect"
+                        width={500}
+                        height={100}
+                        className="object-cover aspect-contain w-auto opacity-70 pt-8 lg:block hidden"
+                    />
+                )}
                 {/* Mobile view - 1st, 2nd, 3rd order */}
                 <div className="flex flex-col justify-center items-center space-y-4 lg:hidden">
                     {[
@@ -168,28 +172,30 @@ export const LeaderboardSection = async () => {
                     })}
                 </div>
             </div>
-            <div className="bg-white p-6 max-w-4xl mx-auto">
-                <div className="space-y-4">
-                    {leaderboardData.map((user, index) => (
-                        <div
-                            key={`${user.user_id}-${index}`}
-                            className="flex items-center justify-between py-3 px-8 border-b border-gray-200 last:border-b-0"
-                        >
-                            <div className="flex items-center space-x-4">
-                                <div className="w-8 h-8 bg-gray-600 text-white rounded-full flex items-center justify-center text-lg font-bold">
-                                    {user.rank}
+            {!hideDetails && (
+                <div className="bg-white p-6 max-w-4xl mx-auto">
+                    <div className="space-y-4">
+                        {leaderboardData.map((user, index) => (
+                            <div
+                                key={`${user.user_id}-${index}`}
+                                className="flex items-center justify-between py-3 px-8 border-b border-gray-200 last:border-b-0"
+                            >
+                                <div className="flex items-center space-x-4">
+                                    <div className="w-8 h-8 bg-gray-600 text-white rounded-full flex items-center justify-center text-lg font-bold">
+                                        {user.rank}
+                                    </div>
+                                    <span className="font-medium text-lg text-gray-900">
+                                        {user.full_name}
+                                    </span>
                                 </div>
-                                <span className="font-medium text-lg text-gray-900">
-                                    {user.full_name}
+                                <span className="text-purple-600 text-xl font-bold">
+                                    {user.points}
                                 </span>
                             </div>
-                            <span className="text-purple-600 text-xl font-bold">
-                                {user.points}
-                            </span>
-                        </div>
-                    ))}
+                        ))}
+                    </div>
                 </div>
-            </div>
+            )}
         </div>
     );
 };

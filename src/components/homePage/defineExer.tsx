@@ -19,16 +19,16 @@ const DefineExer = () => {
                 <div className="flex flex-col max-md:items-center max-md:justify-center">
                     <div className="w-[380px] h-48 max-md:w-full max-md:h-32 items-center relative overflow-visible">
                         <Image
-                            src="/exerBox-1.svg"
+                            src="/aignite.png"
                             alt="exerBox1"
-                            className="w-fit h-fit object-cover"
+                            className="w-full h-fit object-cover"
                             width={380}
                             height={160}
                         />
 
                         {/* Top-Right Star */}
                         <motion.div
-                            className="absolute -top-9 -right-9 w-20 h-20"
+                            className="absolute -top-9 -right-6 w-20 h-20"
                             animate={{ rotate: [0, 180, 0] }} // spin forward then back
                             transition={{
                                 duration: 2, // how long one spin takes
