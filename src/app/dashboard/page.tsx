@@ -2,6 +2,7 @@ import { createClient } from "@/utils/supabase/server";
 import { NotRegisteredDashboard } from "@/components/dashboard/not-registered-dashboard";
 import { FormData } from "./upload/_components/registration-form";
 import { LeaderboardSection } from "@/components/dashboard/leaderboard";
+import { RegisteredDashboard } from "@/components/dashboard/registered-dashboard";
 
 export interface UserData extends FormData {
     points: number;
@@ -69,15 +70,15 @@ const Dashboard = async () => {
     const userData: UserData = await fetchUserData();
     console.log("userData", userData);
 
-    // // If user is logged in, show logged view
-    // if (userData && !userData.error) {
-    //     return (
-    //         <>
-    //             <RegisteredDashboard {...userData} />
-    //             <LeaderboardSection />
-    //         </>
-    //     );
-    // }
+    // If user is logged in, show logged view
+    if (userData && !userData.error) {
+        return (
+            <>
+                <RegisteredDashboard {...userData} />
+                <LeaderboardSection />
+            </>
+        );
+    }
 
     // If user is not logged in, show unlogged view
     return (

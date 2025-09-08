@@ -20,20 +20,21 @@ export const NotRegisteredDashboard = () => {
                     <div className="flex flex-col lg:flex-row items-center justify-center gap-12 lg:gap-56">
                         <div className="space-y-6 text-center lg:text-left">
                             <h1 className="text-4xl lg:text-6xl font-sans">
-                                <span className="text-black">Register </span>
-                                <br />
-                                <span className="font-bold text-[#11152E]">
-                                    Bootcamp
+                                <span className="text-black">
+                                    Fill out your{" "}
                                 </span>
                                 <br />
-                                11
+                                <span className="font-bold text-[#11152E]">
+                                    Application Form
+                                </span>
+                                <br />
                                 <span className="text-black">Now!</span>
                             </h1>
                             <Button
-                                className="bg-[#804AF2] hover:bg-[#702EFC] text-white px-8 py-3 rounded-lg font-medium"
+                                className="bg-[#804AF2] hover:bg-[#702EFC] lg:text-xl text-white px-8 py-3 rounded-lg font-medium"
                                 onClick={() => router.push("/dashboard/upload")}
                             >
-                                Join Now
+                                Fill Form
                             </Button>
                         </div>
 
