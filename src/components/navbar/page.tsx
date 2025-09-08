@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Menu } from "lucide-react";
 import { useMotionValueEvent, useScroll, motion } from "framer-motion";
 import { handleLogout } from "@/app/hooks/useLogOut";
+import { bookletLink } from "@/utils/information";
 
 interface NavbarProps {
     isLoggedIn: boolean;
@@ -37,7 +38,7 @@ const Navbar = ({ isLoggedIn }: NavbarProps) => {
         },
         {
             title: "Download Booklet",
-            href: "#download",
+            href: bookletLink,
         },
     ];
 

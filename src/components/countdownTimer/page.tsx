@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
+import { bookletLink } from "@/utils/information";
 
 const CountdownTimer: React.FC = () => {
     const [timeLeft, setTimeLeft] = useState({
@@ -136,9 +137,7 @@ const CountdownTimer: React.FC = () => {
                         {/* Booklet Button */}
                         <button
                             className="w-full group flex items-center gap-3 justify-center px-16 py-3 rounded-xl border-2 border-white bg-transparent shadow-lg hover:scale-105 duration-100"
-                            onClick={() =>
-                                window.open("https://drive.google.com/")
-                            }
+                            onClick={() => window.open(bookletLink)}
                         >
                             <motion.img
                                 src="/booklet.svg"
