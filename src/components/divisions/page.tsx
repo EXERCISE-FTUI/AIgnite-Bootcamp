@@ -1,3 +1,4 @@
+"use client";
 import { useState } from "react";
 import NormalWidth from "./normal_width_choice";
 import SmallerWidth from "./smaller_width_choice";
