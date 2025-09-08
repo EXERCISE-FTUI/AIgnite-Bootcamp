@@ -481,7 +481,7 @@ export default function DocumentTab({
                         label="Twibbon Screenshot"
                         note="Screenshot of your Instagram Story with twibbon"
                         acceptedFormats=".png,.jpg,.jpeg"
-                        maxSize={15}
+                        maxSize={4}
                         file={files.twibbon}
                         onChange={file => {
                             setFiles(prev => ({ ...prev, twibbon: file }));
