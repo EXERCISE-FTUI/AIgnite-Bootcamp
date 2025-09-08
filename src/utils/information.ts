@@ -1,4 +1,6 @@
-export const LineGroupLink = "https://line.me/R/ti/g/7f6MEJL3J2";
+export const LineGroupLink = "https://line.me/ti/g/AdFUUaGYFe";
+export const bookletLink =
+    "https://drive.google.com/file/d/1E6_9THkf3rOXqAYKLl6etvhAUti4A3pJ/view?usp=sharing";
 
 export const DepartementsList = [
     {

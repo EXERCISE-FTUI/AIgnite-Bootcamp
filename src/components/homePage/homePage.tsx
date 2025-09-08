@@ -57,7 +57,7 @@ const HomePageExer = () => {
                 >
                     <div className="w-full gap-2 text-center">
                         <motion.img
-                            src="/exer-Footer.svg"
+                            src="/Exer-Footer.svg"
                             alt="headerExer"
                             className="w-full h-[200px] z-10"
                         />

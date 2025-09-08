@@ -12,7 +12,7 @@ export default async function FormSubmissionWithUpload() {
     }
 
     return (
-        <div className="lg:mt-24">
+        <div className="mt-32">
             <RegistrationForm email={email} />
         </div>
     );
