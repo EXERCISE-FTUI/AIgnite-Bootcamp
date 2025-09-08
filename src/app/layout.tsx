@@ -12,6 +12,13 @@ const inter = Inter({
 import HelpButton from "@/components/helpButton/HelpButton";
 import { createClient } from "@/utils/supabase/server";
 import ReferralCapture from "@/components/ReferralCapture";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "AIgnite Bootcamp",
+    description:
+        "FREE 1 month bootcamp for all FTUI students from the 2025 batch",
+};
 
 async function checkUser() {
     const supabase = createClient();
