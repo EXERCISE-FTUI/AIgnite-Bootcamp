@@ -54,13 +54,13 @@ export const RegisteredDashboard = (userData: UserData) => {
 
     return (
         <>
-            <div className="w-full h-auto flex flex-col gap-12 p-4 lg:p-16 items-center pt-36 mb-20 relative overflow-hidden">
+            <div className="w-full h-auto flex flex-col gap-12 p-4 lg:p-16 items-center pt-36 lg:pt-40 mb-20 relative overflow-hidden">
                 <Image
-                    src="/merchPoster.png"
+                    src="/banner-merch.png"
                     alt="merch poster"
-                    width={100}
-                    height={100}
-                    className="w-full h-60 object-cover bg-white"
+                    width={1000}
+                    height={1000}
+                    className="w-auto h-1/2 object-cover rounded-md shadow-xl shadow-white/20"
                 />
                 <div className="bg-black/20 backdrop-blur-md w-full lg:w-3/4 border border-white/20 rounded-lg h-auto lg:h-60 p-8 lg:p-12 flex flex-col justify-between">
                     {/* Top section with greeting and points */}
