@@ -1,8 +1,5 @@
 "use client";
-
-import Image from "next/image";
 import React, { useState, useEffect } from "react";
-import SpaceyBackground from "../../../public/spaceycountdown.svg";
 
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
@@ -110,7 +107,7 @@ const CountdownTimer: React.FC = () => {
                             </p>
                             <div className="flex items-center w-full justify-center">
                                 <div className="flex flex-row gap-4">
-                                    <Image
+                                    <motion.img
                                         src="/timer.svg"
                                         alt="timer"
                                         className="w-7 h-7"
@@ -126,12 +123,13 @@ const CountdownTimer: React.FC = () => {
                     </div>
 
                     {/* Background Gradient - Positioned relative to container */}
-                    <div
-                        className="w-[110vw] lg:w-full h-4/5 lg:h-2/3 -bottom-6 lg:bottom-0 -left-4 lg:rounded-xl backdrop-blur-sm absolute z-0 bg-cover"
-                        style={{
-                            backgroundImage: `url(${SpaceyBackground.src})`,
-                        }}
-                    ></div>
+                    <div className="w-[110vw] lg:w-full h-4/5 lg:h-2/3 -bottom-6 lg:bottom-0 -left-4 lg:rounded-xl backdrop-blur-sm absolute z-0 bg-cover">
+                        <motion.img
+                            src="/spaceycountdown.svg"
+                            alt="spaceycountdown"
+                            className="w-full h-full object-cover"
+                        />
+                    </div>
 
                     {/* Content Container */}
                     <div className="flex justify-center items-center w-full px-20 z-[5] lg:mt-20">
@@ -142,7 +140,7 @@ const CountdownTimer: React.FC = () => {
                                 window.open("https://drive.google.com/")
                             }
                         >
-                            <Image
+                            <motion.img
                                 src="/booklet.svg"
                                 alt="booklet"
                                 className="w-7 h-7"

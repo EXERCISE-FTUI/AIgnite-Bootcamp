@@ -56,12 +56,10 @@ const HomePageExer = () => {
                     transition={{ delay: 1.5, duration: 2 }}
                 >
                     <div className="w-full gap-2 text-center">
-                        <Image
+                        <motion.img
                             src="/exer-Footer.svg"
                             alt="headerExer"
                             className="w-full h-[200px] z-10"
-                            width={100}
-                            height={100}
                         />
                     </div>
                 </motion.div>
