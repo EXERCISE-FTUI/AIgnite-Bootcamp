@@ -19,6 +19,7 @@ interface FileUploadProps {
     maxSize: number;
     onChange: (file: File | string | null) => void;
     file: File | string | null; // Add the `file` prop to display the link or file
+    link?: string;
 }
 
 function FileUpload({
@@ -28,6 +29,7 @@ function FileUpload({
     maxSize,
     onChange,
     file,
+    link,
 }: FileUploadProps) {
     const [dragActive, setDragActive] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -84,6 +86,17 @@ function FileUpload({
         <div className="flex flex-col justify-end space-y-2">
             <Label className="font-semibold">{label}</Label>
             {note && <p className="text-sm text-muted-foreground">{note}</p>}
+            {link && (
+                <p className="text-sm text-blue_4 hover:underline">
+                    <a
+                        href={`https://${link}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        {link}
+                    </a>
+                </p>
+            )}
             <div className="bg-white border border-blue_4 rounded-lg p-3">
                 <Card
                     className={`max-h-32 overflow-hidden relative border-2 border-dashed rounded-lg p-3 ${
@@ -420,7 +433,7 @@ export default function DocumentTab({
                     label="Curriculum Vitae (CV) ATS"
                     note="NOTE: Must use ATS CV format"
                     acceptedFormats=".pdf"
-                    maxSize={10}
+                    maxSize={4}
                     file={files.cvAts}
                     onChange={file => {
                         setFiles(prev => ({ ...prev, cvAts: file }));
@@ -429,9 +442,10 @@ export default function DocumentTab({
                 />
                 <FileUpload
                     label="Essay Motivation Letter"
-                    note="Use the provided template"
+                    note="Use the provided template here:"
+                    link="s.id/essayTemplateAIgnite"
                     acceptedFormats=".pdf"
-                    maxSize={15}
+                    maxSize={4}
                     file={files.essayMotlet}
                     onChange={file => {
                         setFiles(prev => ({ ...prev, essayMotlet: file }));
@@ -454,10 +468,10 @@ export default function DocumentTab({
                     <p>
                         Here&apos;s the twibbon link:{" "}
                         <a
-                            href="https://www.twibbon.com/[PLACEHOLDER]"
+                            href="https://s.id/twibbonTemplateAIgnite"
                             className="text-blue_4 hover:underline"
                         >
-                            https://www.twibbon.com/[PLACEHOLDER]
+                            s.id/twibbonTemplateAIgnite
                         </a>
                     </p>
                 </div>
