@@ -14,7 +14,10 @@ const Divisions = () => {
     return (
         <div className="mb-32 lg:mb-32 mt-10">
             <h1 className="text-8xl tracking-tighter text-center text-white max-md:text-5xl mb-8 max-md:mb-5 font-bold">
-                Path <span className="font-normal text-7xl">Selection</span>
+                Path{" "}
+                <span className="font-normal lg:text-7xl text-5xl">
+                    Selection
+                </span>
             </h1>
             <div className="w-full relative flex flex-col lg:rounded-none rounded-md justify-center items-start gap-8 lg:gap-16 px-4 md:px-[100px] pt-6 lg:pt-[63px] pb-[64px] self-stretch bg-white">
                 <div id="divisions" className="absolute -top-20"></div>

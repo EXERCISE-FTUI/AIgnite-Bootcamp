@@ -18,7 +18,7 @@ export default function Home() {
                         className="w-full h-1/2 object-cover rounded-md shadow-xl shadow-white/20"
                     />
                 </div>
-                <div className="bg-white pb-24">
+                <div className="bg-white">
                     <LeaderboardSection hideDetails={true} />
 
                     <RegisterButton />
