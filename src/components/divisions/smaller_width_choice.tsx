@@ -14,7 +14,7 @@ const SmallerWidth = ({
     selectedIcon,
     setSelectedIcon,
 }: SmallerWidthProps) => {
-    const divisionNames = ["UI/UX", "Software", "Hardware"];
+    const divisionNames = ["Software", "Hardware", "UI/UX"];
 
     return (
         <div className="w-full flex justify-center px-4">
