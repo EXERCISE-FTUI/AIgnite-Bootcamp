@@ -22,8 +22,10 @@ const Page = () => {
     });
     const [confirmPassword, setConfirmPassword] = useState("");
     const [step, setStep] = useState(1);
+    const [loading, setLoading] = useState(false);
 
     async function handleRegister(e: React.FormEvent<HTMLFormElement>) {
+        setLoading(true);
         e.preventDefault(); // Prevent form submission
         if (registerData.password !== confirmPassword) {
             toast({
@@ -31,6 +33,7 @@ const Page = () => {
                 variant: "destructive",
                 description: "Your passwords do not match. Please try again.",
             });
+            setLoading(false);
             return;
         }
 
@@ -69,6 +72,7 @@ const Page = () => {
             });
             setStep(2);
         }
+        setLoading(false);
     }
 
     return (
@@ -85,6 +89,7 @@ const Page = () => {
                                 setRegisterData={setRegisterData}
                                 setconfirmPassword={setConfirmPassword}
                                 registerData={registerData}
+                                loading={loading}
                             />
                         </div>
                         <div className="w-full col-span-1 items-center justify-center flex">
@@ -100,7 +105,7 @@ const Page = () => {
                 </>
             ) : (
                 <>
-                    <h1 className=" flex text-purple_4 scroll-m-20 text-3xl font-extrabold tracking-tight lg:text-4xl">
+                    <h1 className=" flex text-white scroll-m-20 text-3xl font-extrabold tracking-tight lg:text-4xl">
                         Register
                     </h1>
                     <div className="mt-5 md:mt-0 w-full items-center grid grid-cols-1 md:grid-cols-2 gap-4 justify-center">
