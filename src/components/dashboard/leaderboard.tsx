@@ -25,12 +25,6 @@ async function fetchLeaderboard(): Promise<LeaderboardUser[]> {
 // Leaderboard component (shared between logged and unlogged views)
 export const LeaderboardSection = async () => {
     const leaderboardData = await fetchLeaderboard();
-    leaderboardData.push({
-        user_id: "1",
-        full_name: "John Doe",
-        points: 100,
-        rank: 3,
-    });
     // Show fallback message if no data
     if (!leaderboardData || leaderboardData.length === 0) {
         return (

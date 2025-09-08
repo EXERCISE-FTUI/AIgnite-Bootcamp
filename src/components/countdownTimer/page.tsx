@@ -5,6 +5,7 @@ import React, { useState, useEffect } from "react";
 import SpaceyBackground from "../../../public/spaceycountdown.svg";
 
 import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 
 const CountdownTimer: React.FC = () => {
     const [timeLeft, setTimeLeft] = useState({
@@ -12,8 +13,9 @@ const CountdownTimer: React.FC = () => {
         hours: 0,
         minutes: 0,
     });
+    const router = useRouter();
 
-    const deadline = "2025-01-26T23:59:00";
+    const deadline = "2025-09-27T23:59:00";
 
     useEffect(() => {
         const calculateTimeLeft = () => {
@@ -116,7 +118,7 @@ const CountdownTimer: React.FC = () => {
                                         height={28}
                                     />
                                     <div className="text-center text-white lg:text-lg font-medium">
-                                        26 Jan 2025, 23:59 WIB
+                                        27 Sep 2025, 23:59 WIB
                                     </div>
                                 </div>
                             </div>
@@ -154,11 +156,12 @@ const CountdownTimer: React.FC = () => {
                     </div>
                 </div>
 
-                <div className="w-full flex justify-center pt-16 md:pt-8 lg:p-0 p-4">
+                <div className="w-full flex justify-center pt-16 md:pt-12 lg:mt-12 lg:p-0 p-4">
                     <button
                         className="z-10 group w-[50vh] flex items-center gap-3 justify-center px-16 py-3 rounded-xl border-2 border-white hover:border-[#0A192F] shadow-lg hover:scale-[120%] duration-100
 						bg-gradient-to-r from-[#0A192F] to-[#002A5E]
 						hover:from-white hover:to-white"
+                        onClick={() => router.push("/dashboard")}
                     >
                         <div className="text-center text-white text-xl font-bold group-hover:text-[#002A5E]">
                             Register Now
