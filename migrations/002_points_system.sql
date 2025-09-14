@@ -16,9 +16,7 @@ CREATE TABLE IF NOT EXISTS public.point_rules (
 
 -- Insert default point rules
 INSERT INTO public.point_rules (action, points, description) VALUES
-    ('referral_success', 100, 'Points awarded when someone uses your referral code'),
-    ('form_submission', 50, 'Points awarded for completing registration'),
-    ('mission_complete', 25, 'Points awarded for completing missions')
+    ('referral_success', 100, 'Points awarded when someone uses your referral code')
 ON CONFLICT (action) DO UPDATE SET
     points = EXCLUDED.points,
     description = EXCLUDED.description;
