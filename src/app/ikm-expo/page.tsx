@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/utils/supabase/server";
 import IkmExpoSuccessPage from "./_components/success";
 import IkmExpoExpiredPage from "./_components/expired";
+import { campaignIKMExpoDeadline } from "@/utils/information";
 
 export default async function IkmExpoPage() {
     // Create Supabase client for server-side authentication
@@ -29,7 +30,7 @@ export default async function IkmExpoPage() {
     }
 
     // Check if campaign is still active
-    const CAMPAIGN_DEADLINE = new Date("2025-09-19T16:59:59Z");
+    const CAMPAIGN_DEADLINE = new Date(campaignIKMExpoDeadline);
     const now = new Date();
 
     if (now >= CAMPAIGN_DEADLINE) {

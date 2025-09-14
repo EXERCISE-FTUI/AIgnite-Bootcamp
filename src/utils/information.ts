@@ -1,7 +1,7 @@
 export const LineGroupLink = "https://line.me/ti/g/AdFUUaGYFe";
 export const bookletLink =
     "https://drive.google.com/file/d/1E6_9THkf3rOXqAYKLl6etvhAUti4A3pJ/view?usp=sharing";
-export const campaignIKMExpoDeadline = "2025-09-19T16:59:59Z";
+export const campaignIKMExpoDeadline = "2025-09-11T16:59:59Z";
 
 export const DepartementsList = [
     {
