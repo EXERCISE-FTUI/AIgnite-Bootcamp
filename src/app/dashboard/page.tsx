@@ -8,6 +8,7 @@ export interface UserData extends FormData {
     points: number;
     code: string;
     error?: string;
+    isFromIKMExpo: boolean;
 }
 
 export interface LeaderboardUser {
@@ -34,11 +35,12 @@ async function fetchUserData() {
     // Fetch user data from users table (referralCode, points, etc.)
     const { data: userData, error: userError } = await (await supabase)
         .from("users")
-        .select("points,code")
+        .select("points,code,isFromIKMExpo")
         .eq("user_id", auth.user.id)
         .single();
 
     if (userError) {
+        console.error("User data fetch error:", userError);
         return { error: userError.message };
     }
 
@@ -47,10 +49,20 @@ async function fetchUserData() {
         .from("form_submission")
         .select("*")
         .eq("user_id", auth.user.id)
-        .single();
+        .maybeSingle(); // Use maybeSingle() instead of single() to handle no rows
 
     if (formError) {
+        console.error("Form data fetch error:", formError);
         return { error: formError.message };
+    }
+
+    // If no form submission exists, create a basic structure
+    if (!formData) {
+        console.log("No form submission found for user");
+        return {
+            ...userData,
+            user_id: auth.user.id,
+        };
     }
 
     // Combine and flatten the data
@@ -60,7 +72,6 @@ async function fetchUserData() {
         user_id: auth.user.id,
     };
 
-    console.log("user", combinedUser);
     return combinedUser;
 }
 
@@ -68,10 +79,9 @@ export const dynamic = "force-dynamic";
 
 const Dashboard = async () => {
     const userData: UserData = await fetchUserData();
-    console.log("userData", userData);
 
     // If user is logged in, show logged view
-    if (userData && !userData.error) {
+    if (userData.email && !userData.error) {
         return (
             <>
                 <RegisteredDashboard {...userData} />
@@ -83,7 +93,7 @@ const Dashboard = async () => {
     // If user is not logged in, show unlogged view
     return (
         <>
-            <NotRegisteredDashboard />
+            <NotRegisteredDashboard {...userData} />
             <LeaderboardSection />
         </>
     );

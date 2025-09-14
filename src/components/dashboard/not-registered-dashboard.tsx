@@ -1,11 +1,11 @@
 "use client";
-
 import { Button } from "@/components/ui/button";
 import { Monitor, Settings, BarChart } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { createClient } from "@/utils/supabase/client";
+import { useState } from "react";
+import { UserData } from "@/app/dashboard/page";
+import { campaignIKMExpoDeadline } from "@/utils/information";
 
 const iconData = [
     { Icon: Monitor, label: "Monitor" },
@@ -13,29 +13,10 @@ const iconData = [
     { Icon: BarChart, label: "Bar Chart" },
 ];
 
-export const NotRegisteredDashboard = () => {
+export const NotRegisteredDashboard = (userData: UserData) => {
     const router = useRouter();
-    const [isFromIKMExpo, setIsFromIKMExpo] = useState(false);
-    useEffect(() => {
-        async function fetchUser() {
-            const supabase = createClient();
-            const { data: { user } } = await supabase.auth.getUser();
-            console.log("Hello", user, "love Jesse");
-            if (user) {
-                const { data, error } = await supabase
-                    .from('users')
-                    .select('isFromIKMExpo')
-                    .eq('id', user.id)
-                    .single();
-                if (!error && data?.isFromIKMExpo) {
-                    setIsFromIKMExpo(true);
-                } else {
-                    setIsFromIKMExpo(false);
-                }
-            }
-        }
-        fetchUser();
-    }, []);
+    const [isFromIKMExpo] = useState(userData.isFromIKMExpo);
+
     return (
         <div className="w-full bg-white">
             <div className="min-h-screen flex items-center justify-center">
@@ -59,11 +40,17 @@ export const NotRegisteredDashboard = () => {
                             >
                                 Fill Form
                             </Button>
-                            {isFromIKMExpo && (
-                                <div className="mt-2 px-4 py-2 bg-purple-100 text-purple-800 rounded text-sm font-medium">
-                                    Expo attendee bonus: Submit before 19 Sep 2025 to receive 100 pts
-                                </div>
-                            )}
+                            {isFromIKMExpo &&
+                                Date.now() <
+                                    new Date(
+                                        campaignIKMExpoDeadline
+                                    ).getTime() && (
+                                    <div className="mt-2 px-4 py-2 bg-purple-100 text-purple-800 rounded text-sm font-medium">
+                                        IKM Expo attendee bonus: Submit before{" "}
+                                        <b>19 Sep 2025</b> to receive{" "}
+                                        <b>100 pts</b> bonus!
+                                    </div>
+                                )}
                         </div>
 
                         <div className="flex flex-col items-center space-y-8">
