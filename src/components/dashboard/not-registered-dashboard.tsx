@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Monitor, Settings, BarChart } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { createClient } from "@/utils/supabase/client";
 
 const iconData = [
     { Icon: Monitor, label: "Monitor" },
@@ -13,6 +15,27 @@ const iconData = [
 
 export const NotRegisteredDashboard = () => {
     const router = useRouter();
+    const [isFromIKMExpo, setIsFromIKMExpo] = useState(false);
+    useEffect(() => {
+        async function fetchUser() {
+            const supabase = createClient();
+            const { data: { user } } = await supabase.auth.getUser();
+            console.log("Hello", user, "love Jesse");
+            if (user) {
+                const { data, error } = await supabase
+                    .from('users')
+                    .select('isFromIKMExpo')
+                    .eq('id', user.id)
+                    .single();
+                if (!error && data?.isFromIKMExpo) {
+                    setIsFromIKMExpo(true);
+                } else {
+                    setIsFromIKMExpo(false);
+                }
+            }
+        }
+        fetchUser();
+    }, []);
     return (
         <div className="w-full bg-white">
             <div className="min-h-screen flex items-center justify-center">
@@ -36,6 +59,11 @@ export const NotRegisteredDashboard = () => {
                             >
                                 Fill Form
                             </Button>
+                            {isFromIKMExpo && (
+                                <div className="mt-2 px-4 py-2 bg-purple-100 text-purple-800 rounded text-sm font-medium">
+                                    Expo attendee bonus: Submit before 19 Sep 2025 to receive 100 pts
+                                </div>
+                            )}
                         </div>
 
                         <div className="flex flex-col items-center space-y-8">

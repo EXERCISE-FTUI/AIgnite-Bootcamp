@@ -11,6 +11,8 @@ export default function LoginPage() {
 	const [loginData, setLoginData] = useState({email: "", password: ""});
 	const [loading, setLoading] = useState(false);
 	const router = useRouter();
+	// Read returnTo from query string
+	const returnTo = typeof window !== 'undefined' ? new URLSearchParams(window.location.search).get('returnTo') : null;
 
 	async function handleLogin(e: React.FormEvent<HTMLFormElement>) {
 		setLoading(true);
@@ -36,7 +38,7 @@ export default function LoginPage() {
 			toast({
 				title: "Login successful!",
 			});
-			router.push("/dashboard");
+			router.push(returnTo ?? "/dashboard");
 			window.location.reload();
 		}
 		setLoading(false);
