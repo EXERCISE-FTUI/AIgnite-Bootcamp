@@ -9,6 +9,7 @@ export interface UserData extends FormData {
     code: string;
     error?: string;
     isFromIKMExpo: boolean;
+    completedMissions: string[];
 }
 
 export interface LeaderboardUser {
@@ -65,10 +66,23 @@ async function fetchUserData() {
         };
     }
 
+    // Try to get all missions the user has completed
+    let { data: completedMissions } = await (await supabase)
+        .from("points_log")
+        .select("action")
+        .eq("user_id", auth.user.id);
+
+    // flatten the missions and filter distinct
+    if (completedMissions) {
+        completedMissions = completedMissions.map(mission => mission.action);
+        completedMissions = [...new Set(completedMissions)];
+    }
+
     // Combine and flatten the data
     const combinedUser = {
         ...userData,
         ...formData,
+        completedMissions,
         user_id: auth.user.id,
     };
 

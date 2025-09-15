@@ -21,7 +21,7 @@ export default async function IkmExpoPage() {
     // Check if user already claim the campaign
     const { data: userRecord } = await (await supabase)
         .from("users")
-        .select("isFromIKMExpo")
+        .select("isFromIKMExpo,status")
         .eq("user_id", user.id)
         .single();
 
@@ -35,6 +35,29 @@ export default async function IkmExpoPage() {
 
     if (now >= CAMPAIGN_DEADLINE) {
         return <IkmExpoExpiredPage />;
+    }
+
+    if (userRecord?.status === "SUBMITTED") {
+        // If user already submitted but haven't claimed the bonus, add 100 points
+        await (
+            await supabase
+        ).rpc("add_points", {
+            target_user_id: user.id,
+            action_name: "ikm_expo_bonus",
+            reference_id: null,
+            metadata: {
+                points: 100,
+                message: "User already submitted, claim IKM expo bonus",
+            },
+        });
+
+        // set status to true
+        await (await supabase)
+            .from("users")
+            .update({ isFromIKMExpo: true })
+            .eq("user_id", user.id);
+
+        redirect("/dashboard");
     }
 
     // Update user's isFromIKMExpo status
