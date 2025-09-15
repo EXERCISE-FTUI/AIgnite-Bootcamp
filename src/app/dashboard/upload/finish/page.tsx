@@ -22,7 +22,7 @@ function Page() {
                 height={500}
             />
             <div className="-translate-y-28 flex flex-col items-center space-y-4">
-                <h1 className="text-purple_4 scroll-m-20 text-3xl font-extrabold tracking-tight lg:text-4xl">
+                <h1 className="text-purple_4 scroll-m-20 text-3xl pt-8 font-extrabold tracking-tight lg:text-4xl">
                     Thank You For Registering!
                 </h1>
                 <h2 className="text-blue_2 scroll-m-20 text-xl font-bold tracking-tight lg:text-2xl">

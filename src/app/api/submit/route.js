@@ -1,10 +1,11 @@
 import { createClient } from "@/utils/supabase/server";
 import { NextResponse } from "next/server";
+import { campaignIKMExpoDeadline } from "@/utils/information";
 
 export async function POST(req) {
-        // IKM Expo bonus logic
-        const CAMPAIGN_DEADLINE = new Date('2025-09-19T16:59:59Z'); // 23:59 WIB
-        const now = new Date();
+    // IKM Expo bonus logic
+    const CAMPAIGN_DEADLINE = new Date(campaignIKMExpoDeadline);
+    const now = new Date();
     try {
         const reqData = await req.json();
         const supabase = createClient();
@@ -43,7 +44,9 @@ export async function POST(req) {
         }
 
         // Fetch user record for IKM Expo logic
-        const { data: userRecord, error: userFetchError } = await (await supabase)
+        const { data: userRecord, error: userFetchError } = await (
+            await supabase
+        )
             .from("users")
             .select("isFromIKMExpo")
             .eq("user_id", auth?.user.id)
@@ -52,19 +55,19 @@ export async function POST(req) {
         if (userFetchError) {
             throw new Error(userFetchError.message);
         }
-        
+
         if (userRecord?.isFromIKMExpo && now < CAMPAIGN_DEADLINE) {
             // Call add_points RPC with 100 points
-            const { error: pointsError } = await (await supabase)
-                .rpc('add_points', {
-                    target_user_id: auth?.user.id,
-                    action_name: 'ikm_expo_bonus',
-                    reference_id: null,
-                    metadata: { points: 100 }
-                });
-            if (pointsError) {
-                throw new Error(pointsError.message);
-            }
+            await (
+                await supabase
+            ).rpc("add_points", {
+                target_user_id: auth?.user.id,
+                action_name: "ikm_expo_bonus",
+                reference_id: null,
+                metadata: { points: 100 },
+            });
+
+            // don't throw error if pointsError
         }
 
         return NextResponse.json(
