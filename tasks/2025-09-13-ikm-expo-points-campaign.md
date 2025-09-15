@@ -129,37 +129,37 @@ The campaign also adds subtle UI cues for flagged users and handles both success
 
 -   [ ] 1.0 Backend: QR Claim Endpoint to set `isFromIKMExpo`
 
-    -   [ ] 1.1 Create `src/app/api/ikm-expo/claim/route.ts` with `POST` handler.
-    -   [ ] 1.2 Fetch Supabase session; if none, return 401.
-    -   [ ] 1.3 Compare `NOW()` vs `CAMPAIGN_DEADLINE`; return `{ success:false, reason:'expired' }` when expired.
-    -   [ ] 1.4 Update current user row `isFromIKMExpo = true` (idempotent) via Supabase client RPC.
-    -   [ ] 1.5 Return `{ success:true }` JSON response.
-    -   [ ] 1.6 Add integration test `tests/ikm-expo/claim.spec.ts` covering success, unauthenticated, expired.
+   -   [x] 1.1 Create `src/app/api/ikm-expo/claim/route.ts` with `POST` handler.
+   -   [x] 1.2 Fetch Supabase session; if none, return 401.
+   -   [x] 1.3 Compare `NOW()` vs `CAMPAIGN_DEADLINE`; return `{ success:false, reason:'expired' }` when expired.
+   -   [x] 1.4 Update current user row `isFromIKMExpo = true` (idempotent) via Supabase client RPC.
+   -   [x] 1.5 Return `{ success:true }` JSON response.
+   -   [x] 1.6 Add integration test `tests/ikm-expo/claim.spec.ts` covering success, unauthenticated, expired.
 
 -   [ ] 2.0 Backend: Award 100-point bonus during form submission
 
-    -   [ ] 2.1 In `src/app/api/submit/route.js`, after successful DB insert, fetch user record.
-    -   [ ] 2.2 If `isFromIKMExpo && now < CAMPAIGN_DEADLINE`, call `add_points` RPC with hard-coded 100.
-    -   [ ] 2.3 Ensure logic skips for non-Expo users.
-    -   [ ] 2.4 Add integration test `tests/ikm-expo/submission-bonus.spec.ts` validating single award and 0 pts for others.
+   -   [x] 2.1 In `src/app/api/submit/route.js`, after successful DB insert, fetch user record.
+   -   [x] 2.2 If `isFromIKMExpo && now < CAMPAIGN_DEADLINE`, call `add_points` RPC with hard-coded 100.
+   -   [x] 2.3 Ensure logic skips for non-Expo users.
+   -   [x] 2.4 Add integration test `tests/ikm-expo/submission-bonus.spec.ts` validating single award and 0 pts for others.
 
 -   [ ] 3.0 Frontend: QR landing, success, and expired pages
 
-    -   [ ] 3.1 Create `/ikm-expo/page.tsx` that triggers claim API in `useEffect` and handles redirects.
-    -   [ ] 3.2 Build `/ikm-expo/success/page.tsx` with copy and CTA to `/upload`.
-    -   [ ] 3.3 Build `/ikm-expo/expired/page.tsx` with expiry message.
-    -   [ ] 3.4 Add simple unit tests verifying rendered messages.
+   -   [x] 3.1 Create `/ikm-expo/page.tsx` that triggers claim API in `useEffect` and handles redirects.
+   -   [x] 3.2 Build `/ikm-expo/success/page.tsx` with copy and CTA to `/upload`.
+   -   [x] 3.3 Build `/ikm-expo/expired/page.tsx` with expiry message.
+   -   [x] 3.4 Add simple unit tests verifying rendered messages.
 
 -   [ ] 4.0 Frontend: Login `returnTo` parameter handling
 
-    -   [ ] 4.1 Update `src/app/auth/login/page.tsx` to read `returnTo` query and pass along after auth.
-    -   [ ] 4.2 Modify post-login logic (hook or callback) to `router.push(returnTo ?? '/dashboard')`.
-    -   [ ] 4.3 Write Cypress flow test: scan link → login → auto-redirect completes claim.
+   -   [x] 4.1 Update `src/app/auth/login/page.tsx` to read `returnTo` query and pass along after auth.
+   -   [x] 4.2 Modify post-login logic (hook or callback) to `router.push(returnTo ?? '/dashboard')`.
+   -   [x] 4.3 Write Cypress flow test: scan link → login → auto-redirect completes claim.
 
 -   [ ] 5.0 Frontend: Expo bonus notices on dashboard and upload pages
 
-    -   [ ] 5.1 In `not-registered-dashboard.tsx`, when `session.user.isFromIKMExpo`, render banner below Fill Form button.
-    -   [ ] 5.2 In `/dashboard/upload/page.tsx`, render banner below Next/Submit when same condition.
+   -   [x] 5.1 In `not-registered-dashboard.tsx`, when `session.user.isFromIKMExpo`, render banner below Fill Form button.
+   -   [x] 5.2 In `/dashboard/upload/page.tsx`, render banner below Next/Submit when same condition.
     -   [ ] 5.3 Add unit tests to ensure visibility toggles based on flag.
 
 -   [ ] 6.0 Testing & QA [MANUAL, NO LLM]

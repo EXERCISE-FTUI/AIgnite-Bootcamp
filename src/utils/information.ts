@@ -1,6 +1,7 @@
 export const LineGroupLink = "https://line.me/ti/g/AdFUUaGYFe";
 export const bookletLink =
     "https://drive.google.com/file/d/1E6_9THkf3rOXqAYKLl6etvhAUti4A3pJ/view?usp=sharing";
+export const campaignIKMExpoDeadline = "2025-09-19T16:59:59Z";
 
 export const DepartementsList = [
     {
@@ -57,10 +58,20 @@ export const DepartementsList = [
     },
 ];
 
-export const Missions: { title: string; points?: number }[] = [
+export const Missions: {
+    title: string;
+    points?: number;
+    action_name?: string;
+}[] = [
     {
         title: "Invite Your Friend!",
         points: 100,
+        action_name: "referral_success",
+    },
+    {
+        title: "Visit us at IKM Expo!",
+        points: 100,
+        action_name: "ikm_expo_bonus",
     },
     {
         title: "More missions coming soon!",

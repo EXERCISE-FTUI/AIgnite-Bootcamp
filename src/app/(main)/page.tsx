@@ -13,8 +13,8 @@ export default function Home() {
                     <Image
                         src="/banner-merch.png"
                         alt="merch banner"
-                        width={1000}
-                        height={1000}
+                        width={3000}
+                        height={2000}
                         className="w-full h-1/2 object-cover rounded-md shadow-xl shadow-white/20"
                     />
                 </div>
