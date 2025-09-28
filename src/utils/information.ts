@@ -1,4 +1,4 @@
-export const LineGroupLink = "https://line.me/ti/g/AdFUUaGYFe";
+export const LineGroupLink = "https://line.me/ti/g/kYB4L3R2kE";
 export const bookletLink =
     "https://drive.google.com/file/d/1E6_9THkf3rOXqAYKLl6etvhAUti4A3pJ/view?usp=sharing";
 
