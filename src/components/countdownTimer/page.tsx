@@ -13,7 +13,7 @@ const CountdownTimer: React.FC = () => {
     });
     const router = useRouter();
 
-    const deadline = "2025-09-27T23:59:00";
+    const deadline = "2025-09-29T23:59:00";
 
     useEffect(() => {
         const calculateTimeLeft = () => {
@@ -116,7 +116,7 @@ const CountdownTimer: React.FC = () => {
                                         height={28}
                                     />
                                     <div className="text-center text-white lg:text-lg font-medium">
-                                        27 Sep 2025, 23:59 WIB
+                                        29 Sep 2025, 23:59 WIB
                                     </div>
                                 </div>
                             </div>

@@ -173,15 +173,25 @@ export const RegisteredDashboard = (userData: UserData) => {
                 <div className="flex flex-col gap-2">
                     {" "}
                     {Missions.map(mission => {
+                        const isCompleted =
+                            userData.completedMissions.includes(
+                                mission.action_name || ""
+                            ) && mission.action_name !== "referral_success";
                         return (
                             <div
                                 key={mission.title}
-                                className="w-full flex cursor-default justify-between rounded-md items-center bg-[#11162F] px-4 py-2"
+                                className={`w-full flex cursor-default justify-between rounded-md items-center bg-[#11162F] px-4 py-2 ${
+                                    isCompleted
+                                        ? "opacity-40 cursor-not-allowed"
+                                        : ""
+                                }`}
                             >
                                 <h3 className="text-lg lg:text-3xl text-white">
                                     {mission.title}
                                 </h3>
-                                <p className="text-[#A259FF] text-lg lg:text-3xl">
+                                <p
+                                    className={`text-[#A259FF] text-lg lg:text-3xl`}
+                                >
                                     {mission.points && mission.points > 0
                                         ? `${mission.points} Points`
                                         : ""}
