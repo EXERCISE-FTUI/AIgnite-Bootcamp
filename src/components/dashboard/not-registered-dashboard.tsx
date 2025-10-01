@@ -2,7 +2,6 @@
 import { Button } from "@/components/ui/button";
 import { Monitor, Settings, BarChart } from "lucide-react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { UserData } from "@/app/dashboard/page";
 import { campaignIKMExpoDeadline } from "@/utils/information";
@@ -14,7 +13,6 @@ const iconData = [
 ];
 
 export const NotRegisteredDashboard = (userData: UserData) => {
-    const router = useRouter();
     const [isFromIKMExpo] = useState(userData.isFromIKMExpo);
 
     return (
@@ -34,11 +32,8 @@ export const NotRegisteredDashboard = (userData: UserData) => {
                                 <br />
                                 <span className="text-black">Now!</span>
                             </h1>
-                            <Button
-                                className="bg-[#804AF2] hover:bg-[#702EFC] lg:text-xl text-white px-8 py-3 rounded-lg font-medium"
-                                onClick={() => router.push("/dashboard/upload")}
-                            >
-                                Fill Form
+                            <Button className="bg-[#804AF2]/70 cursor-not-allowed hover:bg-[#702EFC] lg:text-xl text-white px-8 py-3 rounded-lg font-medium">
+                                Recruitment is Closed!
                             </Button>
                             {isFromIKMExpo &&
                                 Date.now() <
