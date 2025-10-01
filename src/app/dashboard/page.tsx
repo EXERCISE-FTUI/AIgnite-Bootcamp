@@ -10,6 +10,8 @@ export interface UserData extends FormData {
     error?: string;
     isFromIKMExpo: boolean;
     completedMissions: string[];
+    isAccepted?: boolean;
+    isAnnouncementOpened?: boolean;
 }
 
 export interface LeaderboardUser {
@@ -48,7 +50,7 @@ async function fetchUserData() {
     // Fetch form submission data if it exists
     const { data: formData, error: formError } = await (await supabase)
         .from("form_submission")
-        .select("*")
+        .select("*, isAccepted, isAnnouncementOpened")
         .eq("user_id", auth.user.id)
         .maybeSingle(); // Use maybeSingle() instead of single() to handle no rows
 
