@@ -1,9 +1,19 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog";
 import Image from "next/image";
-import { LineGroupLink, Missions } from "@/utils/information";
+import { Missions } from "@/utils/information";
 import { UserData } from "@/app/dashboard/page";
+import { updateAnnouncementOpened } from "@/app/dashboard/actions";
 import { CopyIcon, LinkIcon } from "lucide-react";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
@@ -11,6 +21,7 @@ import { useToast } from "@/hooks/use-toast";
 export const RegisteredDashboard = (userData: UserData) => {
     const [copyTooltip, setCopyTooltip] = useState("");
     const [linkTooltip, setLinkTooltip] = useState("");
+    const [announcementDialogOpen, setAnnouncementDialogOpen] = useState(false);
     const { toast } = useToast();
 
     const copyReferralCode = async () => {
@@ -62,7 +73,7 @@ export const RegisteredDashboard = (userData: UserData) => {
                     height={1000}
                     className="w-auto h-1/2 object-cover rounded-md shadow-xl shadow-white/20"
                 />
-                <div className="bg-black/20 backdrop-blur-md w-full lg:w-3/4 border border-white/20 rounded-lg h-auto lg:h-60 p-8 lg:p-12 flex flex-col justify-between">
+                <div className="bg-black/20 backdrop-blur-md w-full lg:w-3/4 border border-white/20 rounded-lg h-auto lg:h-auto p-8 lg:p-12 flex flex-col justify-between">
                     {/* Top section with greeting and points */}
                     <div className="flex lg:flex-row flex-col justify-between items-start h-full lg:gap-0 gap-8">
                         <div className="flex flex-col justify-between w-full lg:w-1/2 h-full">
@@ -71,28 +82,222 @@ export const RegisteredDashboard = (userData: UserData) => {
                                     Hi, {userData.firstName || "Nama"}!
                                 </h1>
                                 <span className="text-gray-300 text-xl">
-                                    Kamu terdaftar di path{" "}
-                                    <span className="font-bold text-white">
-                                        {userData.selectedPath}
-                                    </span>
-                                    !
+                                    {userData.isAnnouncementOpened ? (
+                                        userData.isAccepted ? (
+                                            <>
+                                                Selamat! kamu diterima di path{" "}
+                                                <span className="font-bold text-white">
+                                                    {userData.selectedPath}
+                                                </span>
+                                                !
+                                            </>
+                                        ) : (
+                                            <>
+                                                <span className="text-white">
+                                                    Mohon maaf, kamu belum
+                                                    diterima di path{" "}
+                                                    {userData.selectedPath},
+                                                    jangan pantang semangat!
+                                                    Kamu masih bisa mendaftar
+                                                    sebagai staff tetap EXERCISE
+                                                    2026.
+                                                </span>
+                                            </>
+                                        )
+                                    ) : (
+                                        <p className="font-bold pt-2">
+                                            Cek Announcement Kamu Sekarang!
+                                        </p>
+                                    )}
                                 </span>
                             </div>
 
-                            <Button
-                                className="bg-[#00C200] w-fit hover:bg-[#00C200] hover:-translate-y-0.5 ease-in-out transform transition-all"
-                                onClick={() => {
-                                    window.open(LineGroupLink, "_blank");
-                                }}
-                            >
-                                <Image
-                                    alt="line"
-                                    src="/lineIcon.svg"
-                                    width={40}
-                                    height={40}
-                                />
-                                Join Line Group
-                            </Button>
+                            {!userData.isAnnouncementOpened ? (
+                                <Dialog
+                                    open={announcementDialogOpen}
+                                    onOpenChange={setAnnouncementDialogOpen}
+                                >
+                                    <DialogTrigger asChild>
+                                        <Button className="bg-[#8B7CF6] w-fit hover:bg-[#7C3AED] hover:-translate-y-0.5 ease-in-out transform transition-all">
+                                            Check Announcement
+                                        </Button>
+                                    </DialogTrigger>
+                                    <DialogContent className="text-black max-md:w-[95%] max-md:rounded-lg">
+                                        <DialogHeader>
+                                            <DialogTitle className="text-2xl">
+                                                {userData.isAccepted
+                                                    ? "Congratulations!"
+                                                    : "Thank You!"}
+                                            </DialogTitle>
+                                            <DialogDescription className="">
+                                                {userData.isAccepted
+                                                    ? "Selamat bergabung di AIgnite Bootcamp 2025!"
+                                                    : "Terimakasih atas minat kamu pada bootcamp kami."}
+                                            </DialogDescription>
+                                        </DialogHeader>
+                                        <div className="">
+                                            {userData.isAccepted ? (
+                                                <>
+                                                    <p>
+                                                        Selamat! Kamu telah
+                                                        diterima sebagai peserta
+                                                        AIgnite Bootcamp 2025 di
+                                                        path{" "}
+                                                        <span className="font-bold">
+                                                            {
+                                                                userData.selectedPath
+                                                            }
+                                                        </span>
+                                                        .<br></br>
+                                                        <br></br>
+                                                        <span>
+                                                            Segera Join line
+                                                            group untuk
+                                                            informasi lebih
+                                                            lanjut:
+                                                        </span>
+                                                    </p>
+
+                                                    <p className="text-sm text-red-500 mt-2">
+                                                        *ini adalah group baru,
+                                                        berbeda dengan group
+                                                        preliminary. WAJIB JOIN
+                                                    </p>
+
+                                                    {/* Desktop: Show QR Code */}
+                                                    <div className="hidden lg:block">
+                                                        <Image
+                                                            alt="Line Group QR Code"
+                                                            src="/line_group_diterima.jpg"
+                                                            width={150}
+                                                            height={150}
+                                                            className="rounded-lg shadow-lg mx-auto"
+                                                        />
+                                                    </div>
+
+                                                    {/* Mobile: Show Button */}
+                                                    <div className="block lg:hidden">
+                                                        <Button
+                                                            className="bg-[#00C200] w-fit hover:bg-[#00C200] hover:-translate-y-0.5 ease-in-out transform transition-all"
+                                                            onClick={() => {
+                                                                const linkToOpen =
+                                                                    "https://line.me/ti/g/8Jm6da5mn4";
+                                                                window.open(
+                                                                    linkToOpen,
+                                                                    "_blank"
+                                                                );
+                                                            }}
+                                                        >
+                                                            <Image
+                                                                alt="line"
+                                                                src="/lineIcon.svg"
+                                                                width={40}
+                                                                height={40}
+                                                            />
+                                                            Join Participants
+                                                            Group
+                                                        </Button>
+                                                    </div>
+
+                                                    <p className="pt-4">
+                                                        Sampai jumpa di Grand
+                                                        Launching tanggal 4
+                                                        Oktober 2025!
+                                                    </p>
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <p>
+                                                        Setelah pertimbangan
+                                                        yang sangat ketat, kami
+                                                        belum bisa menawarkan
+                                                        kamu tempat di bootcamp
+                                                        kali ini. Jangan
+                                                        berkecil hati, tetap
+                                                        semangat dan terus asah
+                                                        kemampuanmu!
+                                                    </p>
+                                                    <p className="pt-4 font-bold">
+                                                        {" "}
+                                                        <span>
+                                                            Ini bukanlah akhir,
+                                                            kami tunggu di Open
+                                                            Recruitment Staff
+                                                            EXERCISE 2026!
+                                                        </span>
+                                                    </p>
+                                                </>
+                                            )}
+                                        </div>
+                                        <DialogFooter>
+                                            <Button
+                                                onClick={async () => {
+                                                    try {
+                                                        await updateAnnouncementOpened();
+                                                        setAnnouncementDialogOpen(
+                                                            false
+                                                        );
+                                                    } catch (error) {
+                                                        console.error(
+                                                            "Error updating announcement:",
+                                                            error
+                                                        );
+                                                    }
+                                                }}
+                                                className="bg-[#8B7CF6] hover:bg-[#7C3AED]"
+                                            >
+                                                Close
+                                            </Button>
+                                        </DialogFooter>
+                                    </DialogContent>
+                                </Dialog>
+                            ) : (
+                                <>
+                                    {userData.isAccepted && (
+                                        <>
+                                            {/* Desktop: Show QR Code */}
+                                            <div className="hidden lg:block">
+                                                <div className="">
+                                                    <p className="text-white text-lg mb-4">
+                                                        Scan QR Code untuk Join
+                                                        Participants Group
+                                                    </p>
+                                                    <Image
+                                                        alt="Line Group QR Code"
+                                                        src="/line_group_diterima.jpg"
+                                                        width={200}
+                                                        height={200}
+                                                        className="rounded-lg shadow-lg"
+                                                    />
+                                                </div>
+                                            </div>
+
+                                            {/* Mobile: Show Button */}
+                                            <div className="block lg:hidden">
+                                                <Button
+                                                    className="bg-[#00C200] w-fit hover:bg-[#00C200] hover:-translate-y-0.5 ease-in-out transform transition-all"
+                                                    onClick={() => {
+                                                        const linkToOpen =
+                                                            "https://line.me/ti/g/8Jm6da5mn4";
+                                                        window.open(
+                                                            linkToOpen,
+                                                            "_blank"
+                                                        );
+                                                    }}
+                                                >
+                                                    <Image
+                                                        alt="line"
+                                                        src="/lineIcon.svg"
+                                                        width={40}
+                                                        height={40}
+                                                    />
+                                                    Join Participants Group
+                                                </Button>
+                                            </div>
+                                        </>
+                                    )}
+                                </>
+                            )}
                         </div>
                         <div className="text-right flex flex-col justify-between h-full self-end">
                             <div>
